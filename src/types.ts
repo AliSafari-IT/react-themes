@@ -141,3 +141,27 @@ export interface UseThemeOptions {
   defaultMode?: ThemeMode;
   storageKey?: string;
 }
+
+export interface ThemeConfig {
+  defaultMode?: ThemeMode;
+  defaultTheme?: string;
+  persistMode?: boolean;
+  storageKey?: string;
+  enableTransitions?: boolean;
+  customThemes?: Record<string, Theme>;
+}
+
+// CSS Variable names for theme integration
+export interface ThemeVariables {
+  colors: Record<keyof ThemeColors, string>;
+  spacing: Record<keyof ThemeSpacing, string>;
+  radius: Record<keyof ThemeRadius, string>;
+  typography: {
+    fontFamily: Record<keyof ThemeTypography['fontFamily'], string>;
+    fontSize: Record<keyof ThemeTypography['fontSize'], string>;
+    fontWeight: Record<keyof ThemeTypography['fontWeight'], string>;
+    lineHeight: Record<keyof ThemeTypography['lineHeight'], string>;
+  };
+  transitions: Record<keyof ThemeTransitions, string>;
+  zIndex: Record<keyof Theme['zIndex'], string>;
+}

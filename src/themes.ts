@@ -168,6 +168,13 @@ export const themes = {
   dark: darkTheme,
 };
 
+// Default themes for the provider
+export const defaultThemes = {
+  default: lightTheme,
+  light: lightTheme,
+  dark: darkTheme,
+};
+
 // Helper function to merge themes
 export function mergeTheme(baseTheme: Theme, customTheme: Partial<Theme>): Theme {
   return {
