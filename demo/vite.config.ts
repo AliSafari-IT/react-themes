@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      // Allow importing from the parent src directory
-      '@asafarim/react-themes': path.resolve(__dirname, '../src/index.ts')
+      '@asafarim/react-themes': path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src/index.ts')
     }
   },
   server: {
