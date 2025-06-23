@@ -1,0 +1,91 @@
+{
+  "name": "@asafarim/react-themes",
+  "version": "1.0.0",
+  "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": {
+      "import": "./dist/styles/index.css",
+      "require": "./dist/styles/index.css"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "react",
+    "themes",
+    "dark-mode",
+    "light-mode",
+    "css-variables",
+    "theme-management",
+    "typescript",
+    "ui",
+    "components"
+  ],
+  "author": "Ali Safari <ali@asafarim.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/AliSafari-IT/asafarim/tree/main/ASafariM.Clients/packages/react-themes#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliSafari-IT/asafarim.git",
+    "directory": "ASafariM.Clients/packages/react-themes"
+  },
+  "bugs": {
+    "url": "https://github.com/AliSafari-IT/asafarim/issues"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.2"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "format": [
+      "cjs",
+      "esm"
+    ],
+    "dts": true,
+    "splitting": false,
+    "sourcemap": true,
+    "clean": true,
+    "minify": true,
+    "external": [
+      "react",
+      "react-dom"
+    ]
+  }
+}
