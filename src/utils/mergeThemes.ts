@@ -15,7 +15,7 @@ export function mergeThemes(...themes: Array<Theme | Partial<Theme>>): Theme {
     throw new Error('First theme must be a complete theme object');
   }
 
-  return additionalThemes.reduce((merged, theme) => {
+  return additionalThemes.reduce((merged, theme): Theme => {
     return {
       ...merged,
       ...theme,
@@ -62,7 +62,7 @@ export function mergeThemes(...themes: Array<Theme | Partial<Theme>>): Theme {
         ...theme.zIndex,
       },
     };
-  }, baseTheme);
+  }, baseTheme as Theme);
 }
 
 /**
