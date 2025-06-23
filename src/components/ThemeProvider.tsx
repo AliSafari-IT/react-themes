@@ -50,9 +50,33 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     
     return defaultMode;
   };
-
   const [mode, setModeState] = useState<ThemeMode>(getInitialMode);
-  const [currentTheme, setCurrentTheme] = useState<Theme>(allThemes[defaultTheme as keyof typeof allThemes] || allThemes.default);
+  const [currentThemeName, setCurrentThemeName] = useState<string>(defaultTheme);
+
+  // Get the effective mode (resolving 'auto' to actual light/dark)
+  const getEffectiveMode = (): 'light' | 'dark' => {
+    if (mode === 'auto') {
+      if (typeof window !== 'undefined') {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      return 'light'; // fallback for SSR
+    }
+    return mode;
+  };
+  // Get the current theme based on mode and theme name
+  const getCurrentTheme = (): Theme => {
+    const effectiveMode = getEffectiveMode();
+    
+    // If user selected a specific theme, use it
+    if (currentThemeName !== 'default' && currentThemeName in allThemes) {
+      return allThemes[currentThemeName as keyof typeof allThemes];
+    }
+    
+    // Otherwise use the theme that matches the effective mode
+    return effectiveMode === 'dark' ? allThemes.dark : allThemes.light;
+  };
+
+  const currentTheme = getCurrentTheme();
 
   // Update mode and persist if enabled
   const setMode = (newMode: ThemeMode) => {
@@ -77,16 +101,14 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       setMode(mode === 'light' ? 'dark' : 'light');
     }
   };
-
-  // Set theme
+  // Set theme by name
   const setTheme = (theme: Theme) => {
-    setCurrentTheme(theme);
+    setCurrentThemeName(theme.name);
   };
-
   // Apply theme to document
   useEffect(() => {
     applyTheme(currentTheme, mode);
-  }, [currentTheme, mode]);
+  }, [currentTheme, mode, currentThemeName]); // Add currentThemeName as dependency
 
   // Listen for system theme changes when in auto mode
   useEffect(() => {
@@ -94,12 +116,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => {
-      applyTheme(currentTheme, mode);
+      // Force re-render when system preference changes
+      applyTheme(getCurrentTheme(), mode);
     };
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [currentTheme, mode]);
+  }, [mode]);
 
   const contextValue: ThemeContextType = {
     currentTheme,

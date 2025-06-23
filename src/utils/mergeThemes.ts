@@ -14,8 +14,7 @@ export function mergeThemes(...themes: Array<Theme | Partial<Theme>>): Theme {
   if (!isFullTheme(baseTheme)) {
     throw new Error('First theme must be a complete theme object');
   }
-
-  return additionalThemes.reduce((merged, theme): Theme => {
+  return additionalThemes.reduce((merged: Theme, theme): Theme => {
     return {
       ...merged,
       ...theme,
@@ -62,7 +61,7 @@ export function mergeThemes(...themes: Array<Theme | Partial<Theme>>): Theme {
         ...theme.zIndex,
       },
     };
-  }, baseTheme as Theme);
+  }, baseTheme);
 }
 
 /**
@@ -90,7 +89,7 @@ export function mergeThemeColors(
   baseColors: Theme['colors'],
   ...colorSets: Array<Partial<Theme['colors']>>
 ): Theme['colors'] {
-  return colorSets.reduce((merged, colors) => ({
+  return colorSets.reduce((merged: Theme['colors'], colors): Theme['colors'] => ({
     ...merged,
     ...colors,
   }), baseColors);
@@ -100,14 +99,14 @@ export function mergeThemeColors(
  * Deep merge utility for complex theme objects
  */
 export function deepMergeThemes(target: Theme, ...sources: Array<Partial<Theme>>): Theme {
-  return sources.reduce((merged, source) => {
+  return sources.reduce((merged: Theme, source): Theme => {
     const result = { ...merged };
     
     for (const key in source) {
       const sourceValue = source[key as keyof Theme];
       const targetValue = merged[key as keyof Theme];
       
-      if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue)) {
+      if (sourceValue && typeof sourceValue === 'object' && !Array.isArray(sourceValue) && targetValue && typeof targetValue === 'object') {
         result[key as keyof Theme] = {
           ...targetValue,
           ...sourceValue,

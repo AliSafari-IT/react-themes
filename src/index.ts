@@ -16,6 +16,7 @@ export { ThemeSelector } from './components/ThemeSelector';
 // Export theme utilities
 export { createTheme } from './utils/createTheme';
 export { applyTheme } from './utils/applyTheme';
+export { mergeThemes, mergeThemeColors, deepMergeThemes } from './utils/mergeThemes';
 
 // Default export for convenience
 export { ThemeProvider as default } from './components/ThemeProvider';
