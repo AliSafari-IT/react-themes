@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -15,15 +15,19 @@
       "require": "./dist/index.js"
     },
     "./styles.css": "./dist/styles.css",
-    "./src/styles.css": "./src/styles.css"
-  },
-  "files": [
+    "./src/styles.css": "./src/styles.css",
+    "./src/react-themes-dark.png": "./src/react-themes-dark.png",
+    "./react-themes-dark.png": "./dist/react-themes-dark.png",
+    "./src/react-themes-light.png": "./src/react-themes-light.png"
+  },  "files": [
     "dist",
+    "src/react-themes-light.png",
+    "src/react-themes-dark.png",
     "README.md",
     "LICENSE"
-  ],  "scripts": {
-    "build": "tsup && npm run copy-css",
-    "copy-css": "node -e \"require('fs').copyFileSync('src/styles.css', 'dist/styles.css')\"",
+  ],"scripts": {
+    "build": "tsup && npm run copy-assets",
+    "copy-assets": "node -e \"const fs = require('fs'); fs.copyFileSync('src/styles.css', 'dist/styles.css'); fs.copyFileSync('src/react-themes-light.png', 'dist/react-themes-light.png'); fs.copyFileSync('src/react-themes-dark.png', 'dist/react-themes-dark.png');\"",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
