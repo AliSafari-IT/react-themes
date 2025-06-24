@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -48,14 +48,14 @@
   ],
   "author": "Ali Safari <ali@asafarim.com>",
   "license": "MIT",
-  "homepage": "https://github.com/AliSafari-IT/asafarim/tree/main/ASafariM.Clients/packages/react-themes#readme",
+  "homepage": "https://github.com/AliSafari-IT/react-themes/tree/main#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AliSafari-IT/asafarim.git",
+    "url": "https://github.com/AliSafari-IT/react-themes.git",
     "directory": "ASafariM.Clients/packages/react-themes"
   },
   "bugs": {
-    "url": "https://github.com/AliSafari-IT/asafarim/issues"
+    "url": "https://github.com/AliSafari-IT/react-themes/issues"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
