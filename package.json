@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
