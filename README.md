@@ -8,7 +8,7 @@ A comprehensive theme management system for React applications with automatic da
 
 ## 📸 Preview
 
-Experience the theme system in action with our **[Live Interactive Demo](https://bibliography.asafarim.com/react-themes/demo)**
+Experience the theme system in action with our **[Live Interactive Demo](https://alisafari-it.github.io/react-themes/)**
 
 ### 🎯 Demo Showcases
 
@@ -38,7 +38,7 @@ The live demo demonstrates all package capabilities:
 
 ### 🚀 Try It Live
 
-Visit **[bibliography.asafarim.com/react-themes/demo](https://bibliography.asafarim.com/react-themes/demo)** to:
+Visit **[alisafari-it.github.io/react-themes](https://alisafari-it.github.io/react-themes)** to:
 
 1. **Interactive Testing**: Toggle between themes and see instant changes
 2. **Code Examples**: View implementation examples for each feature
@@ -676,9 +676,9 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 ### 🌟 **Experience the Future of React Theming**
 
-**[Try the Live Demo](https://bibliography.asafarim.com/react-themes/demo)** | **[View Documentation](https://www.npmjs.com/package/@asafarim/react-themes)** | **[See Source Code](https://github.com/AliSafari-IT/asafarim)**
+**[Try the Live Demo](https://alisafari-it.github.io/react-themes)** | **[View Documentation](https://www.npmjs.com/package/@asafarim/react-themes)** | **[See Source Code](https://github.com/AliSafari-IT/react-themes)**
 
-Made with ❤️ and ☕ by **[ASafariM](https://github.com/AliSafari-IT)**
+Made with ❤️ and ☕ by **[ASafariM](https://asafarim.com)**
 
 *Empowering developers to create beautiful, accessible, and user-friendly themed applications*
 
