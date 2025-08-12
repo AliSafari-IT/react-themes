@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -19,21 +19,26 @@
     "./src/react-themes-dark.png": "./src/react-themes-dark.png",
     "./react-themes-dark.png": "./dist/react-themes-dark.png",
     "./src/react-themes-light.png": "./src/react-themes-light.png"
-  },  "files": [
+  },
+  "files": [
     "dist",
     "src/react-themes-light.png",
     "src/react-themes-dark.png",
     "README.md",
     "LICENSE"
-  ],"scripts": {
+  ],
+  "scripts": {
     "build": "tsup && npm run copy-assets",
+    "demo": "pnpm run build && cd demo && pnpm run dev",
     "copy-assets": "node -e \"const fs = require('fs'); fs.copyFileSync('src/styles.css', 'dist/styles.css'); fs.copyFileSync('src/react-themes-light.png', 'dist/react-themes-light.png'); fs.copyFileSync('src/react-themes-dark.png', 'dist/react-themes-dark.png');\"",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d demo/dist"
   },
   "keywords": [
     "react",
@@ -48,7 +53,7 @@
   ],
   "author": "Ali Safari <ali@asafarim.com>",
   "license": "MIT",
-  "homepage": "https://github.com/AliSafari-IT/react-themes/tree/main#readme",
+  "homepage": "https://alisafari-it.github.io/react-themes/",
   "repository": {
     "type": "git",
     "url": "https://github.com/AliSafari-IT/react-themes.git"

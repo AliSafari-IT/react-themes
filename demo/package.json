@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes-demo",
-  "version": "1.0.0",
+  "version": "1.6.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "@asafarim/react-themes": "link:../",
+    "@asafarim/shared": "^1.7.3"
   },
   "devDependencies": {
     "@types/node": "^24.0.3",

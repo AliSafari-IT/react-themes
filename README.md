@@ -50,36 +50,42 @@ Visit **[bibliography.asafarim.com/react-themes/demo](https://bibliography.asafa
 ## ✨ Features
 
 ### 🌓 **Smart Theme Management**
+
 - **Auto Detection**: Automatically detects and follows system dark/light mode preferences
 - **Manual Override**: Users can manually select their preferred theme mode
 - **Persistence**: Remembers user choice across browser sessions using localStorage
 - **Real-time Updates**: Instantly responds to system theme changes
 
 ### 🎨 **Advanced Theming System**
+
 - **Built-in Themes**: Professionally designed light and dark themes out of the box
 - **Custom Themes**: Create unlimited custom themes with full control over colors, spacing, and typography
 - **Theme Merging**: Easily extend existing themes with custom properties
 - **CSS Variables**: Automatic injection of CSS custom properties for seamless styling
 
 ### ⚡ **Performance & User Experience**
+
 - **Smooth Transitions**: Beautiful, configurable transitions between theme changes
 - **Zero Flicker**: Prevents flash of unstyled content during theme initialization
 - **Lightweight**: Minimal bundle size impact (~8KB gzipped)
 - **Tree Shakeable**: Import only what you need
 
 ### 🔧 **Developer Experience**
+
 - **TypeScript First**: Full TypeScript support with comprehensive type definitions
 - **React 18+ Ready**: Optimized for latest React features including concurrent rendering
 - **Hooks API**: Intuitive React hooks for theme management
 - **Component Library**: Pre-built, accessible components for common use cases
 
 ### 🎯 **Integration & Compatibility**
+
 - **Framework Agnostic**: Works with any React-based framework (Next.js, Gatsby, CRA, Vite)
 - **CSS-in-JS Compatible**: Works with styled-components, emotion, and other CSS-in-JS libraries
 - **Tailwind Ready**: Seamlessly integrates with Tailwind CSS through CSS variables
 - **Server-Side Rendering**: Full SSR support with proper hydration handling
 
 ### ♿ **Accessibility & Standards**
+
 - **WCAG Compliant**: Meets Web Content Accessibility Guidelines
 - **Keyboard Navigation**: Full keyboard support for all interactive elements
 - **Screen Reader Support**: Proper ARIA labels and announcements
@@ -140,6 +146,7 @@ function MyComponent() {
 Our **[Live Demo](https://bibliography.asafarim.com/react-themes/demo)** showcases these practical implementations:
 
 #### 🌐 **Web Applications**
+
 ```tsx
 // E-commerce dashboard with theme switching
 import { ThemeProvider, ThemeToggle } from '@asafarim/react-themes';
@@ -160,6 +167,7 @@ function EcommerceDashboard() {
 ```
 
 #### 📱 **Mobile-First Design**
+
 ```css
 /* Responsive design that adapts to theme */
 .mobile-card {
@@ -175,6 +183,7 @@ function EcommerceDashboard() {
 ```
 
 #### 🎨 **Design Systems**
+
 ```tsx
 // Integration with component libraries
 import { Button, Card } from 'your-ui-library';
@@ -201,6 +210,7 @@ function ThemedComponents() {
 ### 🔄 **Advanced Patterns**
 
 #### 🎪 **Dynamic Theme Loading**
+
 ```tsx
 // Load themes dynamically based on user preferences
 import { createTheme, useTheme } from '@asafarim/react-themes';
@@ -221,6 +231,7 @@ function DynamicThemeLoader() {
 ```
 
 #### 🏢 **Multi-Brand Applications**
+
 ```tsx
 // Switch between different brand themes
 const brandThemes = {
@@ -269,6 +280,7 @@ interface ThemeProviderProps {
 | `customThemes` | `Record<string, Theme>` | `{}` | Additional themes to make available |
 
 **Advanced Configuration:**
+
 ```tsx
 // Extended configuration options
 interface ThemeConfig {
@@ -305,6 +317,7 @@ interface UseThemeReturn {
 ```
 
 **Real-world Example:**
+
 ```tsx
 function ThemeAwareComponent() {
   const { currentTheme, mode, setMode, toggleMode } = useTheme();
@@ -343,6 +356,7 @@ interface UseThemeToggleReturn {
 ```
 
 **Practical Usage:**
+
 ```tsx
 function SmartThemeButton() {
   const { mode, toggleMode, isDark, effectiveMode } = useThemeToggle();
@@ -474,24 +488,28 @@ Experience all features at **[bibliography.asafarim.com/react-themes/demo](https
 The demo is a comprehensive showcase featuring:
 
 #### 🎨 **Theme Gallery**
+
 - **Light Theme**: Clean, modern interface with excellent readability
 - **Dark Theme**: Elegant dark mode optimized for low-light environments  
 - **Auto Mode**: Intelligent system preference detection with seamless switching
 - **Custom Themes**: Examples of brand-specific and specialized themes
 
 #### 🛠️ **Component Showcase**
+
 - **ThemeToggle Variants**: Different sizes, styles, and label configurations
 - **ThemeSelector**: Dropdown with icons, labels, and custom options
 - **Integration Examples**: Real components using theme variables
 - **Performance Metrics**: Live transition timing and smoothness demos
 
 #### 📊 **Technical Demonstrations**
+
 - **CSS Variables Live**: Watch variables update in real-time as themes change
 - **Browser Compatibility**: Cross-browser testing interface
 - **Accessibility Features**: Screen reader announcements and keyboard navigation
 - **Mobile Responsiveness**: Touch-optimized controls and layouts
 
 #### 🔧 **Developer Tools**
+
 - **Code Examples**: Copy-paste ready implementations
 - **Theme Inspector**: Live theme object visualization
 - **CSS Variable Explorer**: All available variables with current values
@@ -500,6 +518,7 @@ The demo is a comprehensive showcase featuring:
 ### 📱 **Mobile-Optimized Experience**
 
 The demo is fully responsive and showcases:
+
 - Touch-friendly theme controls
 - Swipe gestures for theme switching  
 - Adaptive layouts for different screen sizes
@@ -564,6 +583,7 @@ applyTheme(customTheme, 'dark');
 We welcome contributions! The project is open source and actively maintained.
 
 ### 🛠️ **Development Setup**
+
 ```bash
 git clone https://github.com/AliSafari-IT/asafarim
 cd ASafariM.Clients/packages/react-themes
@@ -573,6 +593,7 @@ pnpm test
 ```
 
 ### 🧪 **Testing the Demo**
+
 ```bash
 # Run the demo locally
 cd ../../asafarim-bibliography
@@ -582,6 +603,7 @@ pnpm start
 ```
 
 ### 📋 **Contribution Guidelines**
+
 - Follow TypeScript best practices
 - Add tests for new features
 - Update documentation and examples
@@ -595,18 +617,21 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 ## 🌟 **Why Choose @asafarim/react-themes?**
 
 ### ✅ **Production Ready**
+
 - Used in production at [ASafariM Bibliography](https://bibliography.asafarim.com)
 - Thoroughly tested across browsers and devices
 - Optimized for performance and accessibility
 - Regular updates and maintenance
 
 ### 🎯 **Developer Focused**
+
 - Extensive TypeScript support
 - Comprehensive documentation with live examples
 - Active community support
 - Regular feature updates based on user feedback
 
 ### 🚀 **Modern Standards**
+
 - React 18+ optimized
 - CSS3 custom properties
 - ES2020+ JavaScript features
@@ -629,6 +654,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 ## �📝 Changelog
 
 ### 🎉 **v1.1.0** - Latest
+
 - Enhanced TypeScript definitions
 - Improved performance and bundle size
 - Added comprehensive demo showcase
@@ -636,6 +662,7 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 - New theme customization options
 
 ### 🚀 **v1.0.0** - Initial Release  
+
 - Core theme provider functionality
 - Auto mode detection with system preference sync
 - CSS variable injection system
