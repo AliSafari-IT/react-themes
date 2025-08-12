@@ -799,7 +799,7 @@ const ThemeTutorial: React.FC = () => {
         <PackageLinks
           packageName="@asafarim/react-themes"
           githubPath="https://github.com/AliSafari-IT/react-themes"
-          demoPath="https://bibliography.asafarim.com/react-themes/demo"
+          demoPath="https://alisafari-it.github.io/react-themes/"
         />
       </div>
     </div>
