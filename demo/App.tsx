@@ -441,13 +441,26 @@ const ComponentsExample: React.FC = () => {
           }}
         >
           <div style={{ marginBottom: "1rem" }}>
-            <strong>Default:</strong> <ThemeToggle />
+            <strong>Default:</strong> <ThemeToggle variant="default" />
           </div>
           <div style={{ marginBottom: "1rem" }}>
-            <strong>With Labels:</strong> <ThemeToggle showLabels={true} />
+            <strong>Outline:</strong> <ThemeToggle variant="outline" />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <strong>Ghost:</strong> <ThemeToggle variant="ghost" />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <strong>Link (with label):</strong>{" "}
+            <ThemeToggle variant="link" showLabels={true} />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <strong>Circle:</strong> <ThemeToggle variant="circle" />
+          </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <strong>Icon:</strong> <ThemeToggle variant="icon" />
           </div>
           <div>
-            <strong>Custom Size:</strong> <ThemeToggle size="lg" />
+            <strong>Custom Size:</strong> <ThemeToggle size="lg" variant="default" />
           </div>
         </div>
 
@@ -650,6 +663,7 @@ const ThemeTutorial: React.FC = () => {
         leftContent={
           <ThemeToggle
             size="lg"
+            variant="icon"
             style={{
               border: "none",
               backgroundColor: "transparent",

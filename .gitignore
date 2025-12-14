@@ -1,3 +1,5 @@
+node_modules
+/.bin
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -150,3 +152,4 @@ ASafariM.Clients/asafarim-ui/stats.html
 
 ASafariM.Clients/asafarim-cli/ .env
 \[Unit].ini
+node_modules/.bin/eslint
