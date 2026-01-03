@@ -18,22 +18,20 @@ try {
   try {
     execSync(`git commit -m "chore: bump version to v${version}"`, { stdio: 'inherit' });
   } catch (commitError) {
-    if (commitError.message.includes('nothing to commit')) {
+    if (commitError.status === 1 && commitError.message.includes('nothing to commit')) {
       console.log('No changes to commit, proceeding with tag...');
     } else {
       throw commitError;
     }
   }
   
-  // Only tag if it doesn't exist
+  // Only tag if it doesn't exist - check if tag exists first
   try {
+    execSync(`git rev-parse v${version}`, { stdio: 'pipe' });
+    console.log(`Tag v${version} already exists, proceeding with push...`);
+  } catch (checkError) {
+    // Tag doesn't exist, create it
     execSync(`git tag v${version}`, { stdio: 'inherit' });
-  } catch (tagError) {
-    if (tagError.message.includes('already exists') || tagError.message.includes('fatal: tag')) {
-      console.log(`Tag v${version} already exists, proceeding with push...`);
-    } else {
-      throw tagError;
-    }
   }
   
   execSync('git push', { stdio: 'inherit' });
