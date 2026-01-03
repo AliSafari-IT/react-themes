@@ -25,7 +25,17 @@ try {
     }
   }
   
-  execSync(`git tag v${version}`, { stdio: 'inherit' });
+  // Only tag if it doesn't exist
+  try {
+    execSync(`git tag v${version}`, { stdio: 'inherit' });
+  } catch (tagError) {
+    if (tagError.message.includes('already exists')) {
+      console.log(`Tag v${version} already exists, proceeding with push...`);
+    } else {
+      throw tagError;
+    }
+  }
+  
   execSync('git push', { stdio: 'inherit' });
   execSync('git push --tags', { stdio: 'inherit' });
   
