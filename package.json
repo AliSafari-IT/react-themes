@@ -43,7 +43,7 @@
     "prepublishOnly": "npm run clean && npm run build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d demo/dist",
-    "release": "npm run build && git add package.json && git commit -m \"chore: bump version to $(node -p \"require('./package.json').version\")\" && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags"
+    "release": "node scripts/release.js"
   },
   "keywords": [
     "react",
