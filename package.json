@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -42,7 +42,8 @@
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d demo/dist"
+    "deploy": "gh-pages -d demo/dist",
+    "release": "npm run build && git add package.json && git commit -m \"chore: bump version to $(node -p \"require('./package.json').version\")\" && git tag v$(node -p \"require('./package.json').version\") && git push && git push --tags"
   },
   "keywords": [
     "react",
