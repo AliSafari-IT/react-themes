@@ -4,62 +4,16 @@ on:
   push:
     # Run on all branches except gh-pages and on version tags
     branches:
-      - '**'
-      - '!gh-pages'
+      - "**"
+      - "!gh-pages"
     tags:
-      - 'v*'
+      - "v*"
 
 # contents: write is needed for gh-pages deployment (jobs can override if needed)
 permissions:
   contents: write
 
 jobs:
-  publish-canary:
-    name: Publish canary on every push
-    # only branches, and avoid gh-pages explicitly as a safeguard
-    if: startsWith(github.ref, 'refs/heads/') && github.ref != 'refs/heads/gh-pages'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    concurrency:
-      group: canary-${{ github.ref }}
-      cancel-in-progress: true
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm build
-
-      - name: Set unique canary version
-        shell: bash
-        run: |
-          BASE=$(node -p "require('./package.json').version")
-          SHA=${GITHUB_SHA::7}
-          # e.g. 1.2.3-canary.abc123.1234
-          pnpm version "${BASE}-canary.${SHA}.${GITHUB_RUN_NUMBER}" --no-git-tag-version
-          node -p "require('./package.json').version"
-
-      - name: Publish canary to NPM
-        run: pnpm publish --no-git-checks --access public --tag canary
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
   publish-release:
     name: Publish stable on tag
     if: startsWith(github.ref, 'refs/tags/v') # only v* tags
@@ -78,9 +32,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
@@ -95,10 +49,7 @@ jobs:
 
   deploy_pages:
     name: Deploy docs to GitHub Pages
-    needs:
-      - publish-canary
-      - publish-release
-    if: always() && (needs.publish-canary.result == 'success' || needs.publish-release.result == 'success')
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     # inherits top-level contents: write
     steps:
@@ -110,8 +61,8 @@ jobs:
           version: latest
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - run: cd demo && pnpm install --frozen-lockfile

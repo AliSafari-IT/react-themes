@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -32,7 +32,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup && npm run copy-assets",
+    "build": "tsup && pnpm run copy-assets",
     "demo": "pnpm run build && cd demo && pnpm run dev",
     "copy-assets": "node -e \"const fs = require('fs'); fs.copyFileSync('src/styles.css', 'dist/styles.css'); fs.copyFileSync('src/react-themes-light.png', 'dist/react-themes-light.png'); fs.copyFileSync('src/react-themes-dark.png', 'dist/react-themes-dark.png');\"",
     "dev": "tsup --watch",
@@ -40,8 +40,8 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build",
-    "predeploy": "npm run build",
+    "prepublishOnly": "pnpm run clean && pnpm run build",
+    "predeploy": "pnpm run build",
     "deploy": "gh-pages -d demo/dist",
     "release": "node scripts/release.js"
   },
@@ -79,6 +79,7 @@
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "tsup": "^8.0.2",
+    "gh-pages": "^6.0.0",
     "typescript": "^5.4.2"
   },
   "tsup": {
