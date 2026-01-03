@@ -1,3 +1,4 @@
+﻿$ @"
 # @asafarim/react-themes
 
 A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.
@@ -8,105 +9,106 @@ A comprehensive theme management system for React applications with automatic da
 
 ## 📸 Preview
 
-Experience the theme system in action with our **[Live Interactive Demo](https://alisafari-it.github.io/react-themes/)**
+Experience the theme system in action with our Live Interactive Demo:
+
+- https://alisafari-it.github.io/react-themes/
 
 ### 🎯 Demo Showcases
 
 The live demo demonstrates all package capabilities:
 
-- **🎨 Theme Switching**: Real-time theme transitions between light, dark, and auto modes
-- **🔧 Component Gallery**: All built-in components (ThemeToggle, ThemeSelector) in action
-- **📱 Responsive Design**: How themes adapt across different screen sizes
-- **🎪 CSS Variables**: Live CSS variable updates and their effects
-- **⚡ Performance**: Smooth animations and transitions
-- **♿ Accessibility**: Keyboard navigation and screen reader support
+- 🎨 Theme Switching: Real-time theme transitions between light, dark, and auto modes
+- 🔧 Component Gallery: All built-in components (ThemeToggle, ThemeSelector) in action
+- 📱 Responsive Design: How themes adapt across different screen sizes
+- 🎪 CSS Variables: Live CSS variable updates and their effects
+- ⚡ Performance: Smooth animations and transitions
+- ♿ Accessibility: Keyboard navigation and screen reader support
 
 <table>
   <tr>
     <td align="center">
       <img src="./src/react-themes-light.png" alt="Light Theme Preview" width="400"/>
       <br/>
-      <em>Light Theme - Clean and Modern</em>
+      <em>Light Theme — Clean and Modern</em>
     </td>
     <td align="center">
       <img src="./src/react-themes-dark.png" alt="Dark Theme Preview" width="400"/>
       <br/>
-      <em>Dark Theme - Elegant and Eye-friendly</em>
+      <em>Dark Theme — Elegant and Eye‑friendly</em>
     </td>
   </tr>
 </table>
 
 ### 🚀 Try It Live
 
-Visit **[alisafari-it.github.io/react-themes](https://alisafari-it.github.io/react-themes)** to:
+Visit https://alisafari-it.github.io/react-themes/ to:
 
-1. **Interactive Testing**: Toggle between themes and see instant changes
-2. **Code Examples**: View implementation examples for each feature
-3. **Performance Metrics**: See how fast theme switching works
-4. **Integration Examples**: Real-world usage with other components
-5. **Customization Demo**: Examples of custom theme creation
-6. **Browser Compatibility**: Test across different browsers and devices
+1. Interactive Testing: Toggle between themes and see instant changes
+2. Code Examples: View implementation examples for each feature
+3. Performance Metrics: See how fast theme switching works
+4. Integration Examples: Real-world usage with other components
+5. Customization Demo: Examples of custom theme creation
+6. Browser Compatibility: Test across different browsers and devices
 
 ## ✨ Features
 
-### 🌓 **Smart Theme Management**
+### 🌓 Smart Theme Management
 
-- **Auto Detection**: Automatically detects and follows system dark/light mode preferences
-- **Manual Override**: Users can manually select their preferred theme mode
-- **Persistence**: Remembers user choice across browser sessions using localStorage
-- **Real-time Updates**: Instantly responds to system theme changes
+- Auto Detection: Follows system dark/light mode preferences
+- Manual Override: Users can manually select their preferred theme mode
+- Persistence: Remembers user choice across sessions (localStorage)
+- Real-time Updates: Instantly responds to system theme changes
 
-### 🎨 **Advanced Theming System**
+### 🎨 Advanced Theming System
 
-- **Built-in Themes**: Professionally designed light and dark themes out of the box
-- **Custom Themes**: Create unlimited custom themes with full control over colors, spacing, and typography
-- **Theme Merging**: Easily extend existing themes with custom properties
-- **CSS Variables**: Automatic injection of CSS custom properties for seamless styling
+- Built-in Themes: Professionally designed light and dark themes
+- Custom Themes: Create unlimited custom themes with full control
+- Theme Merging: Easily extend existing themes with custom properties
+- CSS Variables: Automatic injection of CSS custom properties
 
-### ⚡ **Performance & User Experience**
+### ⚡ Performance & UX
 
-- **Smooth Transitions**: Beautiful, configurable transitions between theme changes
-- **Zero Flicker**: Prevents flash of unstyled content during theme initialization
-- **Lightweight**: Minimal bundle size impact (~8KB gzipped)
-- **Tree Shakeable**: Import only what you need
+- Smooth Transitions: Beautiful transitions between theme changes
+- Zero Flicker: Prevents flash of unstyled content during init
+- Lightweight: Minimal bundle size impact (~8KB gzipped)
+- Tree-shakeable: Import only what you need
 
-### 🔧 **Developer Experience**
+### 🔧 Developer Experience
 
-- **TypeScript First**: Full TypeScript support with comprehensive type definitions
-- **React 18+ Ready**: Optimized for latest React features including concurrent rendering
-- **Hooks API**: Intuitive React hooks for theme management
-- **Component Library**: Pre-built, accessible components for common use cases
+- TypeScript First: Full type definitions
+- React 18-ready: Works with React 16.8+ (Hooks) and optimized for React 18
+- Hooks API: Intuitive React hooks for theme management
+- Components: Pre-built, accessible components for common use cases
 
-### 🎯 **Integration & Compatibility**
+### 🎯 Integration & Compatibility
 
-- **Framework Agnostic**: Works with any React-based framework (Next.js, Gatsby, CRA, Vite)
-- **CSS-in-JS Compatible**: Works with styled-components, emotion, and other CSS-in-JS libraries
-- **Tailwind Ready**: Seamlessly integrates with Tailwind CSS through CSS variables
-- **Server-Side Rendering**: Full SSR support with proper hydration handling
+- Framework Agnostic: Next.js, Gatsby, CRA, Vite, etc.
+- CSS-in-JS Compatible: styled-components, emotion, etc.
+- Tailwind Ready: Use via CSS variables
+- SSR Support: Hydration-safe with sensible fallbacks
 
-### ♿ **Accessibility & Standards**
+### ♿ Accessibility
 
-- **WCAG Compliant**: Meets Web Content Accessibility Guidelines
-- **Keyboard Navigation**: Full keyboard support for all interactive elements
-- **Screen Reader Support**: Proper ARIA labels and announcements
-- **High Contrast**: Ensures sufficient color contrast ratios in all themes
-- **Reduced Motion**: Respects user's motion preferences
+- WCAG Friendly: High contrast, readable defaults
+- Keyboard Navigation: Full keyboard support
+- Screen Reader Support: Proper ARIA labels
+- Reduced Motion: Respects user preferences
 
 ## 📦 Installation
 
-```bash
+~~~bash
 npm install @asafarim/react-themes
 # or
 yarn add @asafarim/react-themes
 # or
 pnpm add @asafarim/react-themes
-```
+~~~
 
 ## 🚀 Quick Start
 
-### 1. Wrap your app with ThemeProvider
+### 1) Wrap your app with ThemeProvider
 
-```tsx
+~~~tsx
 import React from 'react';
 import { ThemeProvider } from '@asafarim/react-themes';
 import '@asafarim/react-themes/styles.css'; // Optional base styles
@@ -118,36 +120,35 @@ function App() {
     </ThemeProvider>
   );
 }
-```
+~~~
 
-### 2. Use the theme in your components
+### 2) Use the theme in your components
 
-```tsx
+~~~tsx
 import React from 'react';
 import { useTheme, ThemeToggle } from '@asafarim/react-themes';
 
 function MyComponent() {
-  const { mode, currentTheme, toggleMode } = useTheme();
+  const { mode, currentTheme } = useTheme();
 
   return (
-    <div>
+    <div style={{ background: currentTheme.colors.background, color: currentTheme.colors.text }}>
       <h1>Current mode: {mode}</h1>
       <ThemeToggle />
-      {/* Your component content */}
     </div>
   );
 }
-```
+~~~
 
 ## 🎯 Use Cases & Examples
 
-### 📚 **Real-World Applications**
+### 📚 Real-World Applications
 
-Our **[Live Demo](https://bibliography.asafarim.com/react-themes/demo)** showcases these practical implementations:
+See the demo for these practical implementations:
 
-#### 🌐 **Web Applications**
+#### 🌐 Web Applications
 
-```tsx
+~~~tsx
 // E-commerce dashboard with theme switching
 import { ThemeProvider, ThemeToggle } from '@asafarim/react-themes';
 
@@ -158,248 +159,155 @@ function EcommerceDashboard() {
         <h1>Sales Dashboard</h1>
         <ThemeToggle size="sm" showLabels={true} />
       </header>
-      <main className="dashboard-content">
-        {/* Dashboard content adapts automatically */}
-      </main>
+      <main className="dashboard-content">{/* ... */}</main>
     </ThemeProvider>
   );
 }
-```
+~~~
 
-#### 📱 **Mobile-First Design**
+#### 📱 Mobile-First Design
 
-```css
+~~~css
 /* Responsive design that adapts to theme */
 .mobile-card {
   background: var(--theme-color-background-secondary);
   border: 1px solid var(--theme-color-border);
   padding: var(--theme-spacing-md);
   border-radius: var(--theme-radius-lg);
-  
-  /* Automatic dark mode styling */
-  box-shadow: var(--theme-shadow-sm);
+  box-shadow: var(--theme-color-shadow, 0 1px 3px 0 rgba(0, 0, 0, 0.1));
   transition: var(--theme-transition-normal);
 }
-```
+~~~
 
-#### 🎨 **Design Systems**
+#### 🎨 Design Systems
 
-```tsx
+~~~tsx
 // Integration with component libraries
 import { Button, Card } from 'your-ui-library';
 import { useTheme } from '@asafarim/react-themes';
 
 function ThemedComponents() {
   const { currentTheme } = useTheme();
-  
   return (
-    <Card 
-      style={{ 
-        backgroundColor: currentTheme.colors.background,
-        color: currentTheme.colors.text 
-      }}
-    >
+    <Card style={{ backgroundColor: currentTheme.colors.background, color: currentTheme.colors.text }}>
       <Button variant={currentTheme.mode === 'dark' ? 'outlined' : 'filled'}>
         Themed Button
       </Button>
     </Card>
   );
 }
-```
+~~~
 
-### 🔄 **Advanced Patterns**
+### 🔄 Advanced Patterns
 
-#### 🎪 **Dynamic Theme Loading**
+#### 🎪 Dynamic Theme Loading
 
-```tsx
-// Load themes dynamically based on user preferences
+~~~tsx
 import { createTheme, useTheme } from '@asafarim/react-themes';
 
 function DynamicThemeLoader() {
   const { setTheme } = useTheme();
-  
   const loadUserTheme = async (userId: string) => {
-    const userPrefs = await fetch(`/api/users/${userId}/theme`);
-    const themeData = await userPrefs.json();
-    
-    const customTheme = createTheme(themeData);
+    const resp = await fetch(`/api/users/${userId}/theme`);
+    const themeData = await resp.json();
+    const customTheme = createTheme(lightTheme, themeData);
     setTheme(customTheme);
   };
-  
   return <div>Loading personalized theme...</div>;
 }
-```
+~~~
 
-#### 🏢 **Multi-Brand Applications**
+#### 🏢 Multi-Brand Applications
 
-```tsx
-// Switch between different brand themes
+~~~tsx
 const brandThemes = {
-  corporate: createTheme(lightTheme, {
-    name: 'corporate',
-    colors: { primary: '#0066cc', secondary: '#004499' }
-  }),
-  creative: createTheme(darkTheme, {
-    name: 'creative', 
-    colors: { primary: '#ff6b6b', secondary: '#4ecdc4' }
-  })
+  corporate: createTheme(lightTheme, { name: 'corporate', colors: { primary: '#0066cc', secondary: '#004499' } }),
+  creative: createTheme(darkTheme, { name: 'creative', colors: { primary: '#ff6b6b', secondary: '#4ecdc4' } })
 };
 
-<ThemeProvider customThemes={brandThemes}>
+<ThemeProvider customThemes={{ ...brandThemes }}>
   <BrandSwitcher />
 </ThemeProvider>
-```
+~~~
 
 ## 📖 API Reference
 
 ### 🏗️ ThemeProvider
 
-The foundational component that manages theme state and applies CSS variables throughout your application.
+Manages theme state and applies CSS variables throughout your app.
 
-```tsx
+~~~tsx
 interface ThemeProviderProps {
   children: ReactNode;
   defaultMode?: 'light' | 'dark' | 'auto';
-  defaultTheme?: string;
-  persistMode?: boolean;
-  storageKey?: string;
+  defaultTheme?: string; // 'default' | custom theme name
+  persistMode?: boolean; // default: true
+  storageKey?: string;   // default: 'asafarim-theme-mode'
   customThemes?: Record<string, Theme>;
-  config?: ThemeConfig;
 }
-```
+~~~
 
-**Essential Props:**
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | **required** | Child components to provide theme context to |
-| `defaultMode` | `'light' \| 'dark' \| 'auto'` | `'auto'` | Initial theme mode on first load |
-| `defaultTheme` | `string` | `'default'` | Name of the default theme to use |
-| `persistMode` | `boolean` | `true` | Whether to save user's theme choice to localStorage |
-| `storageKey` | `string` | `'asafarim-theme-mode'` | localStorage key for persistence |
-| `customThemes` | `Record<string, Theme>` | `{}` | Additional themes to make available |
-
-**Advanced Configuration:**
-
-```tsx
-// Extended configuration options
-interface ThemeConfig {
-  transitionDuration?: string;
-  breakpoints?: Record<string, string>;
-  enableSystemTheme?: boolean;
-  cssVariablePrefix?: string;
-}
-
-<ThemeProvider 
-  config={{
-    transitionDuration: '200ms',
-    enableSystemTheme: true,
-    cssVariablePrefix: 'app-theme'
-  }}
->
-  <App />
-</ThemeProvider>
-```
+- defaultMode: Initial mode on first load
+- defaultTheme: Name of the default theme to use
+- persistMode: Save user's mode to localStorage
+- storageKey: Key used for persistence
+- customThemes: Provide additional themes
 
 ### 🪝 useTheme Hook
 
-The primary hook for accessing and controlling theme state.
-
-```tsx
+~~~tsx
 interface UseThemeReturn {
-  currentTheme: Theme;           // Currently active theme object
-  mode: ThemeMode;              // Current mode: 'light' | 'dark' | 'auto'
-  setMode: (mode: ThemeMode) => void;    // Change theme mode
-  setTheme: (theme: Theme) => void;      // Change active theme
-  themes: Record<string, Theme>; // All available themes
-  toggleMode: () => void;        // Cycle through light → dark → auto
+  currentTheme: Theme;
+  mode: ThemeMode; // 'light' | 'dark' | 'auto'
+  setMode: (mode: ThemeMode) => void;
+  setTheme: (theme: Theme) => void;
+  themes: Record<string, Theme>;
+  toggleMode: () => void; // cycles light ↔ dark (auto flips to opposite of system)
 }
-```
-
-**Real-world Example:**
-
-```tsx
-function ThemeAwareComponent() {
-  const { currentTheme, mode, setMode, toggleMode } = useTheme();
-  
-  // Conditional styling based on theme
-  const isDarkMode = mode === 'dark' || 
-    (mode === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-  
-  return (
-    <div style={{ 
-      backgroundColor: currentTheme.colors.background,
-      color: currentTheme.colors.text 
-    }}>
-      <h2>Current Theme: {currentTheme.name}</h2>
-      <p>Mode: {mode} {isDarkMode ? '🌙' : '☀️'}</p>
-      <button onClick={toggleMode}>Toggle Theme</button>
-    </div>
-  );
-}
-```
+~~~
 
 ### ⚡ useThemeToggle Hook
 
-Simplified hook specifically for theme mode toggling with additional utilities.
-
-```tsx
+~~~tsx
 interface UseThemeToggleReturn {
-  mode: ThemeMode;              // Current theme mode
-  setMode: (mode: ThemeMode) => void;    // Set specific mode
-  toggleMode: () => void;        // Cycle through modes
-  isDark: boolean;              // true if dark mode is active
-  isLight: boolean;             // true if light mode is active  
-  isAuto: boolean;              // true if auto mode is active
-  effectiveMode: 'light' | 'dark';  // Resolved mode (auto becomes light/dark)
+  mode: ThemeMode;
+  setMode: (mode: ThemeMode) => void;
+  toggleMode: () => void;
+  isDark: boolean;
+  isLight: boolean;
+  isAuto: boolean;
+  effectiveMode: 'light' | 'dark';
 }
-```
-
-**Practical Usage:**
-
-```tsx
-function SmartThemeButton() {
-  const { mode, toggleMode, isDark, effectiveMode } = useThemeToggle();
-  
-  const getIcon = () => {
-    if (mode === 'auto') return '🌓';
-    return isDark ? '🌙' : '☀️';
-  };
-  
-  const getLabel = () => {
-    if (mode === 'auto') return `Auto (${effectiveMode})`;
-    return mode === 'dark' ? 'Dark Mode' : 'Light Mode';
-  };
-  
-  return (
-    <button onClick={toggleMode} title={getLabel()}>
-      {getIcon()} {getLabel()}
-    </button>
-  );
-}
-```
+~~~
 
 ### Components
 
 #### ThemeToggle
 
-A pre-built theme toggle button.
+A pre-built theme toggle button with variants and icon customization.
 
-```tsx
-<ThemeToggle 
-  size="md"           // 'sm' | 'md' | 'lg'
-  showLabels={false}  // Show text labels
+~~~tsx
+import { ThemeToggle } from '@asafarim/react-themes';
+import { Sun, Moon } from 'lucide-react';
+
+<ThemeToggle
+  size="md"                 // 'sm' | 'md' | 'lg'
+  showLabels={false}
+  variant="default"         // 'default' | 'outline' | 'ghost' | 'link' | 'circle' | 'icon'
+  ariaLabel="Toggle theme"
+  lightIcon={<Sun />}
+  darkIcon={<Moon />}
   className="custom-class"
   style={{ margin: '10px' }}
 />
-```
+~~~
 
 #### ThemeSelector
 
 A dropdown selector for theme modes.
 
-```tsx
-<ThemeSelector 
+~~~tsx
+<ThemeSelector
   showLabels={true}
   className="custom-class"
   options={[
@@ -408,14 +316,12 @@ A dropdown selector for theme modes.
     { mode: 'auto', label: 'Auto', icon: '🌓' }
   ]}
 />
-```
+~~~
 
 ## 🎨 Custom Themes
 
-### Creating Custom Themes
-
-```tsx
-import { createTheme, lightTheme } from '@asafarim/react-themes';
+~~~tsx
+import { createTheme, lightTheme, ThemeProvider } from '@asafarim/react-themes';
 
 const myCustomTheme = createTheme(lightTheme, {
   name: 'my-theme',
@@ -427,17 +333,14 @@ const myCustomTheme = createTheme(lightTheme, {
   }
 });
 
-// Use with provider
 <ThemeProvider customThemes={{ 'my-theme': myCustomTheme }}>
   <App />
 </ThemeProvider>
-```
+~~~
 
 ### Using CSS Variables
 
-The package automatically injects CSS variables that you can use in your styles:
-
-```css
+~~~css
 .my-component {
   background-color: var(--theme-color-background);
   color: var(--theme-color-text);
@@ -456,119 +359,76 @@ The package automatically injects CSS variables that you can use in your styles:
 .my-button:hover {
   background-color: var(--theme-color-primary-hover);
 }
-```
+~~~
 
 ## 🎯 Integration with @asafarim/dd-menu
 
-This package works seamlessly with `@asafarim/dd-menu`:
-
-```tsx
+~~~tsx
 import { DDMenu } from '@asafarim/dd-menu';
 import { useTheme } from '@asafarim/react-themes';
 
 function NavMenu() {
   const { mode } = useTheme();
-  
   return (
-    <DDMenu 
-      items={menuItems}
-      theme={mode}  // Pass current theme mode
-      variant="navbar"
-    />
+    <DDMenu items={menuItems} theme={mode} variant="navbar" />
   );
 }
-```
+~~~
 
 ## 🚀 Live Demo & Showcase
 
-### 🎭 **Interactive Demo**
+Experience all features at:
 
-Experience all features at **[bibliography.asafarim.com/react-themes/demo](https://bibliography.asafarim.com/react-themes/demo)**
+- https://alisafari-it.github.io/react-themes/
 
-The demo is a comprehensive showcase featuring:
+The demo highlights:
 
-#### 🎨 **Theme Gallery**
-
-- **Light Theme**: Clean, modern interface with excellent readability
-- **Dark Theme**: Elegant dark mode optimized for low-light environments  
-- **Auto Mode**: Intelligent system preference detection with seamless switching
-- **Custom Themes**: Examples of brand-specific and specialized themes
-
-#### 🛠️ **Component Showcase**
-
-- **ThemeToggle Variants**: Different sizes, styles, and label configurations
-- **ThemeSelector**: Dropdown with icons, labels, and custom options
-- **Integration Examples**: Real components using theme variables
-- **Performance Metrics**: Live transition timing and smoothness demos
-
-#### 📊 **Technical Demonstrations**
-
-- **CSS Variables Live**: Watch variables update in real-time as themes change
-- **Browser Compatibility**: Cross-browser testing interface
-- **Accessibility Features**: Screen reader announcements and keyboard navigation
-- **Mobile Responsiveness**: Touch-optimized controls and layouts
-
-#### 🔧 **Developer Tools**
-
-- **Code Examples**: Copy-paste ready implementations
-- **Theme Inspector**: Live theme object visualization
-- **CSS Variable Explorer**: All available variables with current values
-- **Performance Monitor**: Bundle size and render time metrics
-
-### 📱 **Mobile-Optimized Experience**
-
-The demo is fully responsive and showcases:
-
-- Touch-friendly theme controls
-- Swipe gestures for theme switching  
-- Adaptive layouts for different screen sizes
-- Battery-conscious animations
-
-### 🎯 **Use Cases Demonstrated**
-
-1. **E-commerce Interface**: Product cards, navigation, and checkout flows
-2. **Dashboard Layout**: Charts, tables, and control panels
-3. **Content Management**: Text editors, media galleries, and forms
-4. **Social Platform**: Posts, comments, and user profiles
-5. **Documentation Site**: Code blocks, navigation, and search interfaces
+- Theme Gallery: Light, Dark, Auto, Custom Themes
+- Component Showcase: ThemeToggle variants, ThemeSelector
+- CSS Variables Live: Watch variables update in real time
+- Accessibility: Keyboard, screen readers, reduced motion
+- Mobile Optimizations: Touch-friendly controls and layouts
 
 ## 🔧 Advanced Usage
 
-### Custom Theme Structure
+### Custom Theme Structure (partial)
 
-```tsx
+~~~tsx
 interface Theme {
   name: string;
   mode: 'light' | 'dark' | 'auto';
   colors: {
     background: string;
     backgroundSecondary: string;
+    backgroundTertiary: string;
     text: string;
     textSecondary: string;
+    textMuted: string;
+    border: string;
+    borderLight: string;
+    borderHover: string;
     primary: string;
     primaryHover: string;
-    border: string;
-    // ... more colors
+    primaryActive: string;
+    hover: string;
+    active: string;
+    focus: string;
+    shadow: string;
+    shadowMd: string;
+    shadowLg: string;
   };
-  spacing: {
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    // ... more spacing
-  };
+  spacing: { xs: string; sm: string; md: string; lg: string; xl: string; '2xl': string; '3xl': string; '4xl': string };
   // ... typography, radius, transitions, zIndex
 }
-```
+~~~
 
 ### Programmatic Theme Application
 
-```tsx
+~~~tsx
 import { applyTheme } from '@asafarim/react-themes';
 
-// Apply theme manually
 applyTheme(customTheme, 'dark');
-```
+~~~
 
 ## 🌍 Browser Support
 
@@ -580,80 +440,88 @@ applyTheme(customTheme, 'dark');
 
 ## 🤝 Contributing
 
-We welcome contributions! The project is open source and actively maintained.
+We welcome contributions! The project is open-source and actively maintained.
 
-### 🛠️ **Development Setup**
+### 🛠️ Development Setup
 
-```bash
-git clone https://github.com/AliSafari-IT/asafarim
-cd ASafariM.Clients/packages/react-themes
+~~~bash
+git clone https://github.com/AliSafari-IT/react-themes.git
+cd react-themes
 pnpm install
 pnpm build
-pnpm test
-```
+# optional during development
+pnpm dev
+# quality
+pnpm type-check
+pnpm lint
+~~~
 
-### 🧪 **Testing the Demo**
+### 🔬 Local Verification
 
-```bash
-# Run the demo locally
-cd ../../asafarim-bibliography
-pnpm install
-pnpm start
-# Visit http://localhost:3004/react-themes/demo
-```
+~~~bash
+# After build, you can quickly verify exports
+node test-import.js
+~~~
 
-### 📋 **Contribution Guidelines**
+### 📋 Contribution Guidelines
 
 - Follow TypeScript best practices
-- Add tests for new features
+- Add tests (where applicable) for new features
 - Update documentation and examples
 - Ensure accessibility compliance
 - Test across different browsers
 
 ## 📄 License
 
-MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License — see the [LICENSE](LICENSE) file for details.
 
-## 🌟 **Why Choose @asafarim/react-themes?**
+## 🌟 Why Choose @asafarim/react-themes?
 
-### ✅ **Production Ready**
+### ✅ Production Ready
 
-- Used in production at [ASafariM Bibliography](https://bibliography.asafarim.com)
-- Thoroughly tested across browsers and devices
+- Used in production at ASafariM projects
+- Tested across browsers and devices
 - Optimized for performance and accessibility
 - Regular updates and maintenance
 
-### 🎯 **Developer Focused**
+### 🎯 Developer Focused
 
 - Extensive TypeScript support
 - Comprehensive documentation with live examples
 - Active community support
-- Regular feature updates based on user feedback
+- Regular feature updates
 
-### 🚀 **Modern Standards**
+### 🚀 Modern Standards
 
-- React 18+ optimized
-- CSS3 custom properties
+- React 16.8+ (Hooks) and React 18 optimized
+- CSS Custom Properties
 - ES2020+ JavaScript features
 - Modern bundling and tree-shaking support
 
 ## 🔗 Related Packages & Ecosystem
 
-- **[`@asafarim/dd-menu`](https://www.npmjs.com/package/@asafarim/dd-menu)** - Elegant dropdown menu component with theme integration
-- **[ASafariM Bibliography](https://bibliography.asafarim.com)** - Live application showcasing the theme system
-- **[Interactive Demo](https://bibliography.asafarim.com/react-themes/demo)** - Comprehensive feature demonstration
+- [`@asafarim/dd-menu`](https://www.npmjs.com/package/@asafarim/dd-menu) — Elegant dropdown menu component with theme integration
 
-## � Project Stats
+## 📊 Project Stats
 
-- 🏗️ **Built with**: TypeScript, React 18, CSS3 Custom Properties
-- 📦 **Bundle Size**: ~8KB gzipped
-- 🌍 **Browser Support**: Modern browsers (Chrome 49+, Firefox 31+, Safari 9.1+, Edge 16+)
-- ⚡ **Performance**: Zero-flicker theme switching, optimized re-renders
-- ♿ **Accessibility**: WCAG 2.1 AA compliant
+- 🏗️ Built with: TypeScript, React, CSS Custom Properties
+- 📦 Bundle Size: ~8KB gzipped
+- 🌍 Browser Support: Chrome 49+, Firefox 31+, Safari 9.1+, Edge 16+
+- ⚡ Performance: Zero‑flicker theme switching, optimized re‑renders
+- ♿ Accessibility: WCAG 2.1 AA-friendly
 
-## �📝 Changelog
+## 📝 Changelog
 
-### 🎉 **v1.1.0** - Latest
+### v1.8.1 — Latest
+
+- New: ThemeToggle variants (default, outline, ghost, link, circle, icon)
+- New: Custom icon support via lucide-react (lightIcon/darkIcon)
+- New: mergeThemes, mergeThemeColors, deepMergeThemes utilities
+- Improved: TypeScript types and CSS variable coverage
+- Improved: SSR behavior and localStorage persistence handling
+- Docs: Unified demo links, updated examples
+
+### v1.1.0
 
 - Enhanced TypeScript definitions
 - Improved performance and bundle size
@@ -661,9 +529,9 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 - Extended browser compatibility
 - New theme customization options
 
-### 🚀 **v1.0.0** - Initial Release  
+### v1.0.0 — Initial Release
 
-- Core theme provider functionality
+- Core ThemeProvider functionality
 - Auto mode detection with system preference sync
 - CSS variable injection system
 - Built-in components (ThemeToggle, ThemeSelector)
@@ -674,12 +542,13 @@ MIT License - see the [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-### 🌟 **Experience the Future of React Theming**
+### 🌟 Experience the Future of React Theming
 
-**[Try the Live Demo](https://alisafari-it.github.io/react-themes)** | **[View Documentation](https://www.npmjs.com/package/@asafarim/react-themes)** | **[See Source Code](https://github.com/AliSafari-IT/react-themes)**
+<a href="https://alisafari-it.github.io/react-themes">Try the Live Demo</a> · <a href="https://www.npmjs.com/package/@asafarim/react-themes">View on npm</a> · <a href="https://github.com/AliSafari-IT/react-themes">Source Code</a>
 
-Made with ❤️ and ☕ by **[ASafariM](https://asafarim.com)**
+Made with ❤️ and ☕ by <a href="https://asafarim.com">ASafariM</a>
 
-*Empowering developers to create beautiful, accessible, and user-friendly themed applications*
+<em>Empowering developers to create beautiful, accessible, and user‑friendly themed applications</em>
 
 </div>
+"@ | Set-Content -Path README.md -Encoding UTF8
