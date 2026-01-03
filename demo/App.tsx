@@ -837,7 +837,7 @@ const ThemeTutorial: React.FC = () => {
 const App: React.FC = () => {
   return (
     <ThemeProvider
-      defaultMode="auto"
+      defaultMode="light"
       customThemes={{
         pink: customPinkTheme,
         blue: customBlueTheme,
