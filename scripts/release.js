@@ -13,7 +13,18 @@ console.log(`Releasing version ${version}...`);
 try {
   execSync('npm run build', { stdio: 'inherit' });
   execSync('git add .', { stdio: 'inherit' });
-  execSync(`git commit -m "chore: bump version to v${version}"`, { stdio: 'inherit' });
+  
+  // Only commit if there are changes
+  try {
+    execSync(`git commit -m "chore: bump version to v${version}"`, { stdio: 'inherit' });
+  } catch (commitError) {
+    if (commitError.message.includes('nothing to commit')) {
+      console.log('No changes to commit, proceeding with tag...');
+    } else {
+      throw commitError;
+    }
+  }
+  
   execSync(`git tag v${version}`, { stdio: 'inherit' });
   execSync('git push', { stdio: 'inherit' });
   execSync('git push --tags', { stdio: 'inherit' });
