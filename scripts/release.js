@@ -12,28 +12,32 @@ console.log(`Releasing version ${version}...`);
 // Run commands
 try {
   execSync('npm run build', { stdio: 'inherit' });
-  execSync('git add .', { stdio: 'inherit' });
   
-  // Only commit if there are changes
-  try {
-    execSync(`git commit -m "chore: bump version to v${version}"`, { stdio: 'inherit' });
-  } catch (commitError) {
-    if (commitError.status === 1 && commitError.message.includes('nothing to commit')) {
-      console.log('No changes to commit, proceeding with tag...');
-    } else {
-      throw commitError;
-    }
-  }
-  
-  // Only tag if it doesn't exist - check if tag exists first
+  // Check if tag already exists
+  let tagExists = false;
   try {
     execSync(`git rev-parse v${version}`, { stdio: 'pipe' });
-    console.log(`Tag v${version} already exists, proceeding with push...`);
+    tagExists = true;
   } catch (checkError) {
-    // Tag doesn't exist, create it
-    execSync(`git tag v${version}`, { stdio: 'inherit' });
+    tagExists = false;
   }
   
+  if (tagExists) {
+    console.log(`✅ Tag v${version} already exists. Release already published!`);
+    process.exit(0);
+  }
+  
+  // Try to commit package.json changes if any
+  try {
+    execSync('git add package.json package-lock.json pnpm-lock.yaml 2>/dev/null || true', { stdio: 'pipe' });
+    execSync(`git commit -m "chore: bump version to v${version}"`, { stdio: 'inherit' });
+  } catch (commitError) {
+    // No changes to commit is fine, we'll just tag
+    console.log('No version changes to commit, proceeding with tag...');
+  }
+  
+  // Create and push tag
+  execSync(`git tag v${version}`, { stdio: 'inherit' });
   execSync('git push', { stdio: 'inherit' });
   execSync('git push --tags', { stdio: 'inherit' });
   
