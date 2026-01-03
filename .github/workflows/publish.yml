@@ -2,20 +2,25 @@ name: Publish
 
 on:
   push:
-    # Run on all branches and on version tags
+    # Run on all branches except gh-pages and on version tags
     branches:
       - '**'
+      - '!gh-pages'
     tags:
       - 'v*'
+
+# contents: write is needed for gh-pages deployment (jobs can override if needed)
+permissions:
+  contents: write
 
 jobs:
   publish-canary:
     name: Publish canary on every push
-    if: startsWith(github.ref, 'refs/heads/') # only branches
+    # only branches, and avoid gh-pages explicitly as a safeguard
+    if: startsWith(github.ref, 'refs/heads/') && github.ref != 'refs/heads/gh-pages'
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
     concurrency:
       group: canary-${{ github.ref }}
       cancel-in-progress: true
@@ -28,6 +33,7 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -60,7 +66,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,6 +75,7 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
@@ -87,3 +93,30 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  deploy_pages:
+    name: Deploy docs to GitHub Pages
+    needs:
+      - publish-canary
+      - publish-release
+    if: always() && (needs.publish-canary.result == 'success' || needs.publish-release.result == 'success')
+    runs-on: ubuntu-latest
+    # inherits top-level contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: latest
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run docs:build # or your site build command
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: demo/dist # change to your built site dir
