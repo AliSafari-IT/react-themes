@@ -29,7 +29,7 @@ try {
   try {
     execSync(`git tag v${version}`, { stdio: 'inherit' });
   } catch (tagError) {
-    if (tagError.message.includes('already exists')) {
+    if (tagError.message.includes('already exists') || tagError.message.includes('fatal: tag')) {
       console.log(`Tag v${version} already exists, proceeding with push...`);
     } else {
       throw tagError;
