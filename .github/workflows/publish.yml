@@ -1,0 +1,89 @@
+name: Publish
+
+on:
+  push:
+    # Run on all branches and on version tags
+    branches:
+      - '**'
+    tags:
+      - 'v*'
+
+jobs:
+  publish-canary:
+    name: Publish canary on every push
+    if: startsWith(github.ref, 'refs/heads/') # only branches
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    concurrency:
+      group: canary-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Set unique canary version
+        shell: bash
+        run: |
+          BASE=$(node -p "require('./package.json').version")
+          SHA=${GITHUB_SHA::7}
+          # e.g. 1.2.3-canary.abc123.1234
+          pnpm version "${BASE}-canary.${SHA}.${GITHUB_RUN_NUMBER}" --no-git-tag-version
+          node -p "require('./package.json').version"
+
+      - name: Publish canary to NPM
+        run: pnpm publish --no-git-checks --access public --tag canary
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-release:
+    name: Publish stable on tag
+    if: startsWith(github.ref, 'refs/tags/v') # only v* tags
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish to NPM (latest)
+        run: pnpm publish --no-git-checks --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+

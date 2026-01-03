@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useTheme } from "../hooks/useTheme";
 import type { CSSProperties, ReactNode } from 'react';
+import { Moon, Sun, type LucideIcon } from "lucide-react";
 
 type ThemeToggleVariant =
   | "default"
@@ -18,12 +19,12 @@ export interface ThemeToggleProps {
   /**
    * Custom light icon (default: ☀️)
    */
-  lightIcon?: ReactNode;
+  lightIcon?: ReactNode | LucideIcon | string;
 
   /**
    * Custom dark icon (default: 🌙)
    */
-  darkIcon?: ReactNode;
+  darkIcon?: ReactNode | LucideIcon | string;
 
   /**
    * Button aria-label
@@ -41,41 +42,56 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   style = {},
   showLabels = false,
   size = "md",
-  lightIcon = "☀️",
-  darkIcon = "🌙",
+  lightIcon = <Sun /> as ReactNode | LucideIcon | string,
+  darkIcon = <Moon /> as ReactNode | LucideIcon | string,
   ariaLabel = "Toggle theme",
   variant = "default",
 }) => {
   const { mode, toggleMode } = useTheme();
 
-  const sizeClasses = {
-    sm: "w-8 h-8 text-sm",
-    md: "w-10 h-10 text-base",
-    lg: "w-12 h-12 text-lg",
+    const fontSizeMap: Record<NonNullable<ThemeToggleProps['size']>, string> = {
+    sm: '1rem',
+    md: '1.25rem',
+    lg: '1.5rem',
+  };
+
+  const circleSizeMap: Record<NonNullable<ThemeToggleProps['size']>, string> = {
+    sm: '2rem',
+    md: '2.5rem',
+    lg: '3rem',
   };
 
   const buttonClass = `
-    ${sizeClasses[size]}
     inline-flex items-center justify-center
-    rounded-md border border-gray-300
-    bg-white hover:bg-gray-50
-    dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700
     focus:outline-none focus:ring-2 focus:ring-blue-500
     transition-all duration-200
     ${className}
   `.trim();
 
+
+    const renderIcon = (icon: ReactNode | LucideIcon | string) => {
+    if (React.isValidElement(icon)) {
+      return icon;
+    }
+    if (typeof icon === 'function') {
+      const IconComp = icon as LucideIcon;
+      return <IconComp aria-hidden="true" />;
+    }
+    return icon as React.ReactNode;
+  };
+
   const getIcon = () => {
     switch (mode) {
       case "light":
-        return lightIcon;
+        return renderIcon(lightIcon);
       case "dark":
-        return darkIcon;
+        return renderIcon(darkIcon);
       case "auto":
       default:
-        return "🌓";  
+        return "🌓";
     }
   };
+
 
   const getLabel = () => {
     switch (mode) {
@@ -90,17 +106,18 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   };
 
   
-  const baseStyles: CSSProperties = {
+    const baseStyles: CSSProperties = {
     borderRadius: 'var(--theme-radius-md, 0.375rem)',
     padding: '0.5rem',
     cursor: 'pointer',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '1.25rem',
+    fontSize: fontSizeMap[size],
     transition: 'all 0.2s ease-in-out',
     color: 'var(--color-text, #0f172a)',
   };
+
 
   const variantStyles: Record<ThemeToggleVariant, CSSProperties> = {
     default: {
@@ -132,14 +149,13 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       textAlign: 'center',
 
     },
-    circle: {
+        circle: {
       background: 'var(--color-surface, white)',
       border: '1px solid var(--color-border, #e5e7eb)',
       borderRadius: '9999px',
-      width: '2.5rem',
-      height: '2.5rem',
       textAlign: 'center',
     },
+
     icon: {
       background: 'transparent',
       border: 'none',
@@ -149,21 +165,27 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     },
   };
 
-  const mergedStyles = {
+    const mergedStyles = {
     ...baseStyles,
     ...(variantStyles[variant] ?? variantStyles.default),
     ...style,
+  };
+
+  const finalStyles: CSSProperties = {
+    ...mergedStyles,
+    ...(variant === "circle" ? { width: circleSizeMap[size], height: circleSizeMap[size] } : {}),
   };
   
   return (
     <button
       aria-label={ariaLabel}
       type="button"
-      style={mergedStyles}
+      style={finalStyles}
       onClick={toggleMode}
       className={buttonClass}
       title={ariaLabel}
     >
+
       <span role="img" aria-hidden="true">
         {getIcon()}
       </span>

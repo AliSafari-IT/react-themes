@@ -19,6 +19,8 @@ import {
   PackageLinks,
 } from "@asafarim/shared";
 
+import "@asafarim/react-themes/css";
+
 // Simple GitHub icon component
 const GithubIcon: React.FC = () => (
   <svg
@@ -59,7 +61,7 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({
 const TabComponent: React.FC<{
   tabs: { id: string; label: string; content: React.ReactNode }[];
 }> = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const [activeTab, setActiveTab] = useState(tabs[3].id);
 
   return (
     <div>
@@ -642,22 +644,31 @@ const ThemeTutorial: React.FC = () => {
   return (
     <div
       style={{
-        padding: "2rem",
         backgroundColor: "var(--theme-color-background, #fff)",
         color: "var(--theme-color-text, #000)",
         minHeight: "100vh",
         transition: "all 0.3s ease",
+        padding: "0",
+        margin: "0",
+        width: "100%",
       }}
     >
       <HeaderComponent
-        type="default"
+        type="outlined"
+        style={
+          {
+            width: "100%",
+            margin: "auto",
+            padding: "1rem"
+
+          }
+        }
         title="@asafarim/react-themes Tutorial"
         subtitle="A comprehensive guide to using the theme management system for React applications"
         logoText="ASM"
-        size="md"
+        size="sm"
         align="space-between"
         elevation="medium"
-        showBorder
         onLogoClick={gotoNpm}
         onTitleClick={gotoNpm}
         leftContent={
@@ -667,20 +678,22 @@ const ThemeTutorial: React.FC = () => {
             style={{
               border: "none",
               backgroundColor: "transparent",
-              color: "var(--theme-color-text)",
+              color: "var(--theme-color-text, #d80e0eff)",
               cursor: "pointer",
             }}
           />
         }
         rightContent={
           <ButtonComponent
-            size="sm"
+            size="lg"
             variant="outline"
             style={{
               border: "none",
               backgroundColor: "transparent",
-              color: "var(--theme-color-text)",
+              color: "var(--theme-color-text, #d80e0eff)",
               cursor: "pointer",
+              padding: "0rem 1rem",
+              boxShadow: "var(--theme-shadow-sm)",
             }}
             onClick={() =>
               window.open(
@@ -688,7 +701,7 @@ const ThemeTutorial: React.FC = () => {
                 "_blank"
               )
             }
-            icon={<GithubIcon />}
+            icon={<GithubIcon key={"react-themes"} />}
             target="_blank"
           >
             GitHub
@@ -696,6 +709,13 @@ const ThemeTutorial: React.FC = () => {
         }
       />
 
+      <div style={{ marginTop: "3rem" }}>
+        <PackageLinks
+          packageName="@asafarim/react-themes"
+          githubPath="https://github.com/AliSafari-IT/react-themes"
+          demoPath="https://alisafari-it.github.io/react-themes/"
+        />
+      </div>
       <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
         <div
           style={{
@@ -809,13 +829,6 @@ const ThemeTutorial: React.FC = () => {
         ]}
       />
 
-      <div style={{ marginTop: "3rem" }}>
-        <PackageLinks
-          packageName="@asafarim/react-themes"
-          githubPath="https://github.com/AliSafari-IT/react-themes"
-          demoPath="https://alisafari-it.github.io/react-themes/"
-        />
-      </div>
     </div>
   );
 };
