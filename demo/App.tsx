@@ -1,852 +1,416 @@
 import * as React from "react";
-import { useState } from "react";
-import {
-  ThemeProvider,
-  useTheme,
-  useThemeToggle,
-  ThemeToggle,
-  ThemeSelector,
-  createTheme,
-  lightTheme,
-  darkTheme,
-  mergeThemes,
-  applyTheme,
-  Theme,
-} from "../src"; // Adjust the import path as necessary
-import {
-  ButtonComponent,
-  HeaderComponent,
-  PackageLinks,
-} from "@asafarim/shared";
+import { useTheme, ThemeToggle, ThemeSelector, DensitySelector } from "../src";
+import { Github, Palette, Code, Zap, Layout, Settings, CheckCircle } from "lucide-react";
 
-import "@asafarim/react-themes/css";
-
-// Simple GitHub icon component
-const GithubIcon: React.FC = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    fill="currentColor"
-    viewBox="0 0 16 16"
-    style={{ marginRight: "4px" }}
-  >
-    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-  </svg>
+const Container: React.FC<{ children: React.ReactNode; maxWidth?: string }> = ({ children, maxWidth = 'var(--asm-container-xl)' }) => (
+  <div style={{
+    maxWidth,
+    margin: '0 auto',
+    padding: 'var(--asm-space-page-padding-y) var(--asm-space-page-padding-x)',
+  }}>
+    {children}
+  </div>
 );
 
-// Code block component for displaying code examples
-const CodeBlock: React.FC<{ code: string; language?: string }> = ({
-  code,
-  language = "tsx",
-}) => {
-  return (
-    <pre
-      style={{
-        backgroundColor: "var(--theme-color-background-secondary)",
-        padding: "1rem",
-        borderRadius: "var(--theme-radius-md)",
-        overflowX: "auto",
-        border: "1px solid var(--theme-color-border)",
-        fontSize: "0.9rem",
-        lineHeight: 1.5,
-      }}
-    >
-      <code>{code}</code>
-    </pre>
-  );
-};
+const Card: React.FC<{ children: React.ReactNode; title?: string }> = ({ children, title }) => (
+  <div style={{
+    backgroundColor: 'var(--asm-color-surface)',
+    border: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+    borderRadius: 'var(--asm-radius-lg)',
+    padding: 'var(--asm-space-6)',
+    marginBottom: 'var(--asm-space-6)',
+    boxShadow: 'var(--asm-effect-shadow-sm)',
+  }}>
+    {title && (
+      <h3 style={{
+        marginTop: 0,
+        marginBottom: 'var(--asm-space-4)',
+        fontSize: 'var(--asm-font-size-xl)',
+        fontWeight: 'var(--asm-font-weight-600)',
+        color: 'var(--asm-color-text)',
+      }}>
+        {title}
+      </h3>
+    )}
+    {children}
+  </div>
+);
 
-// Tab component for organizing content
-const TabComponent: React.FC<{
-  tabs: { id: string; label: string; content: React.ReactNode }[];
-}> = ({ tabs }) => {
-  const [activeTab, setActiveTab] = useState(tabs[3].id);
-
-  return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          gap: "0.5rem",
-          marginBottom: "1rem",
-          borderBottom: "1px solid var(--theme-color-border)",
-        }}
-      >
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            style={{
-              padding: "0.5rem 1rem",
-              backgroundColor:
-                activeTab === tab.id
-                  ? "var(--theme-color-primary)"
-                  : "transparent",
-              color: activeTab === tab.id ? "white" : "var(--theme-color-text)",
-              border: "none",
-              borderRadius: "var(--theme-radius-sm) var(--theme-radius-sm) 0 0",
-              cursor: "pointer",
-            }}
-          >
-            {tab.label}
-          </button>
-        ))}
+const CodeBlock: React.FC<{ code: string; title?: string }> = ({ code, title }) => (
+  <div style={{ marginBottom: 'var(--asm-space-4)' }}>
+    {title && (
+      <div style={{
+        padding: 'var(--asm-space-2) var(--asm-space-3)',
+        background: 'var(--asm-color-bg)',
+        borderRadius: 'var(--asm-radius-md) var(--asm-radius-md) 0 0',
+        fontFamily: 'var(--asm-font-family-mono)',
+        fontSize: 'var(--asm-font-size-sm)',
+        fontWeight: 'var(--asm-font-weight-600)',
+        color: 'var(--asm-color-text-muted)',
+        borderBottom: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+      }}>
+        {title}
       </div>
-      <div>{tabs.find((tab) => tab.id === activeTab)?.content}</div>
-    </div>
+    )}
+    <pre style={{
+      backgroundColor: 'var(--asm-color-bg)',
+      padding: 'var(--asm-space-4)',
+      borderRadius: title ? '0 0 var(--asm-radius-md) var(--asm-radius-md)' : 'var(--asm-radius-md)',
+      overflowX: "auto",
+      border: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+      margin: 0,
+      fontFamily: 'var(--asm-font-family-mono)',
+      fontSize: 'var(--asm-font-size-sm)',
+      lineHeight: 'var(--asm-line-height-relaxed)',
+      color: 'var(--asm-color-text)',
+    }}>
+      <code style={{ color: 'var(--asm-color-text)' }}>{code}</code>
+    </pre>
+  </div>
+);
+
+const Header: React.FC = () => {
+  const { mode, resolvedMode, density } = useTheme();
+
+  return (
+    <header style={{
+      borderBottom: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+      marginBottom: 'var(--asm-space-8)',
+    }}>
+      <Container>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingTop: 'var(--asm-space-6)',
+          paddingBottom: 'var(--asm-space-6)',
+        }}>
+          <div>
+            <h1 style={{
+              margin: 0,
+              fontSize: 'var(--asm-font-size-4xl)',
+              fontWeight: 'var(--asm-font-weight-700)',
+              color: 'var(--asm-color-text)',
+            }}>
+              @asafarim/react-themes
+            </h1>
+            <p style={{
+              margin: 'var(--asm-space-2) 0 0',
+              fontSize: 'var(--asm-font-size-lg)',
+              color: 'var(--asm-color-text-muted)',
+            }}>
+              React theme management powered by ASafariM Design Tokens
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 'var(--asm-space-3)', alignItems: 'center' }}>
+            <ThemeToggle variant="ghost" size="lg" />
+            <a
+              href="https://github.com/AliSafari-IT/react-themes"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--asm-space-2)',
+                padding: 'var(--asm-space-2) var(--asm-space-4)',
+                backgroundColor: 'transparent',
+                color: 'var(--asm-color-text)',
+                textDecoration: 'none',
+                borderRadius: 'var(--asm-radius-md)',
+                border: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+                fontSize: 'var(--asm-font-size-sm)',
+                fontWeight: 'var(--asm-font-weight-500)',
+                transition: 'var(--asm-transition-fade)',
+              }}
+            >
+              <Github size={16} />
+              GitHub
+            </a>
+          </div>
+        </div>
+        
+        <div style={{
+          display: 'flex',
+          gap: 'var(--asm-space-4)',
+          paddingBottom: 'var(--asm-space-6)',
+          fontSize: 'var(--asm-font-size-sm)',
+          color: 'var(--asm-color-text-muted)',
+        }}>
+          <div>Mode: <strong>{mode}</strong> ({resolvedMode})</div>
+          <div>Density: <strong>{density}</strong></div>
+        </div>
+      </Container>
+    </header>
   );
 };
 
-// Create custom themes
-const customPinkTheme = createTheme(lightTheme, {
-  name: "pink",
-  colors: {
-    ...lightTheme.colors,
-    primary: "#ff6b6b",
-    primaryHover: "#ff5252",
-    background: "#fdf2f8",
-    backgroundSecondary: "#fce7f3",
-    border: "#fbcfe8",
-  },
-});
-
-const customBlueTheme = createTheme(darkTheme, {
-  name: "blue",
-  colors: {
-    ...darkTheme.colors,
-    primary: "#3b82f6",
-    primaryHover: "#2563eb",
-    background: "#1e3a8a",
-    backgroundSecondary: "#1e40af",
-    text: "#f1f5f9",
-  },
-});
-
-const customGreenTheme = createTheme(lightTheme, {
-  name: "green",
-  colors: {
-    ...lightTheme.colors,
-    primary: "#10b981",
-    primaryHover: "#059669",
-    background: "#ecfdf5",
-    backgroundSecondary: "#d1fae5",
-    border: "#a7f3d0",
-  },
-});
-
-// Example code snippets for the tutorial
-const codeExamples = {
-  basicSetup: `import React from 'react';
-import { ThemeProvider } from '@asafarim/react-themes';
-import '@asafarim/react-themes/styles.css'; // Import styles in your main entry file
+const QuickStartSection: React.FC = () => (
+  <Card title="Quick Start">
+    <p style={{ marginTop: 0, color: 'var(--asm-color-text)' }}>
+      Install the package and start using design tokens in your React app.
+    </p>
+    
+    <CodeBlock 
+      title="Installation"
+      code={`npm install @asafarim/react-themes @asafarim/design-tokens`}
+    />
+    
+    <CodeBlock 
+      title="Setup"
+      code={`import { ThemeProvider } from '@asafarim/react-themes';
 
 function App() {
   return (
     <ThemeProvider defaultMode="auto" persistMode={true}>
-      <YourAppContent />
+      <YourApp />
     </ThemeProvider>
   );
-}`,
-
-  usingThemeHook: `import React from 'react';
-import { useTheme } from '@asafarim/react-themes';
+}`}
+    />
+    
+    <CodeBlock 
+      title="Usage"
+      code={`import { useTheme, ThemeToggle } from '@asafarim/react-themes';
 
 function MyComponent() {
-  const { mode, currentTheme, toggleMode } = useTheme();
+  const { mode, resolvedMode, toggleMode } = useTheme();
   
   return (
     <div>
-      <h1>Current mode: {mode}</h1>
-      <button onClick={toggleMode}>Toggle Theme</button>
-      {/* Your component content */}
+      <p>Current mode: {resolvedMode}</p>
+      <ThemeToggle variant="outline" />
     </div>
   );
-}`,
+}`}
+    />
+  </Card>
+);
 
-  customThemeCreation: `import { createTheme, lightTheme } from '@asafarim/react-themes';
-
-const myCustomTheme = createTheme(lightTheme, {
-  name: 'my-theme',
-  colors: {
-    primary: '#ff6b6b',
-    primaryHover: '#ff5252',
-    background: '#f8f9fa',
-    text: '#212529'
-  }
-});
-
-// Use with provider
-<ThemeProvider customThemes={{ 'my-theme': myCustomTheme }}>
-  <App />
-</ThemeProvider>`,
-
-  cssVariables: `.my-component {
-  background-color: var(--theme-color-background);
-  color: var(--theme-color-text);
-  border: 1px solid var(--theme-color-border);
-  border-radius: var(--theme-radius-md);
-  padding: var(--theme-spacing-md);
-  transition: all var(--theme-transition-normal);
-}`,
-
-  dynamicThemeLoading: `import { createTheme, useTheme } from '@asafarim/react-themes';
-
-function DynamicThemeLoader() {
-  const { setTheme } = useTheme();
-  
-  const loadUserTheme = async (userId) => {
-    const userPrefs = await fetch(\`/api/users/\${userId}/theme\`);
-    const themeData = await userPrefs.json();
-    
-    const customTheme = createTheme(themeData);
-    setTheme(customTheme);
-  };
-  
-  return <div>Loading personalized theme...</div>;
-}`,
-
-  multiBrandThemes: `// Switch between different brand themes
-const brandThemes = {
-  corporate: createTheme(lightTheme, {
-    name: 'corporate',
-    colors: { primary: '#0066cc', secondary: '#004499' }
-  }),
-  creative: createTheme(darkTheme, {
-    name: 'creative', 
-    colors: { primary: '#ff6b6b', secondary: '#4ecdc4' }
-  })
-};
-
-<ThemeProvider customThemes={brandThemes}>
-  <BrandSwitcher />
-</ThemeProvider>`,
-};
-
-// Use case components
-const BasicUsageExample: React.FC = () => {
-  return (
-    <div>
-      <h3>Basic Usage</h3>
-      <p>
-        Start by wrapping your application with the <code>ThemeProvider</code>{" "}
-        component and use the <code>useTheme</code> hook to access theme
-        information.
-      </p>
-      <CodeBlock code={codeExamples.basicSetup} />
-      <div style={{ marginTop: "1rem" }}>
-        <h4>Key Features:</h4>
-        <ul>
-          <li>
-            Automatic system theme detection with{" "}
-            <code>defaultMode="auto"</code>
-          </li>
-          <li>
-            Theme persistence across sessions with{" "}
-            <code>persistMode={true}</code>
-          </li>
-          <li>Built-in light and dark themes</li>
-        </ul>
-      </div>
-    </div>
-  );
-};
-
-const CustomThemesExample: React.FC = () => {
-  const { setTheme, themes } = useTheme();
-
-  return (
-    <div>
-      <h3>Custom Themes</h3>
-      <p>
-        Create your own themes by extending the built-in light or dark themes.
-        This allows for complete customization of colors, spacing, and more.
-      </p>
-      <CodeBlock code={codeExamples.customThemeCreation} />
-
-      <div style={{ marginTop: "1.5rem" }}>
-        <h4>Try Custom Themes:</h4>
-        <div
-          style={{
-            display: "flex",
-            gap: "0.5rem",
-            flexWrap: "wrap",
-            marginTop: "0.5rem",
-          }}
-        >
-          {Object.keys(themes).map((themeName) => (
-            <button
-              key={themeName}
-              onClick={() => setTheme(themes[themeName])}
-              style={{
-                backgroundColor:
-                  themeName === "light" ||
-                  themeName === "pink" ||
-                  themeName === "green"
-                    ? themes[themeName].colors.primary
-                    : themes[themeName].colors.primary,
-                color: "white",
-                border: "none",
-                padding: "0.5rem 1rem",
-                borderRadius: "var(--theme-radius-sm)",
-                cursor: "pointer",
-              }}
-            >
-              {themeName.charAt(0).toUpperCase() + themeName.slice(1)} Theme
-            </button>
-          ))}
+const ComponentShowcaseSection: React.FC = () => (
+  <Card title="Built-in Components">
+    <h4 style={{ marginBottom: 'var(--asm-space-4)' }}>ThemeToggle Variants</h4>
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gap: 'var(--asm-space-4)',
+      marginBottom: 'var(--asm-space-6)',
+    }}>
+      {(['default', 'outline', 'ghost', 'circle', 'icon'] as const).map(variant => (
+        <div key={variant} style={{
+          padding: 'var(--asm-space-4)',
+          backgroundColor: 'var(--asm-color-surface-muted)',
+          borderRadius: 'var(--asm-radius-md)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 'var(--asm-space-2)',
+        }}>
+          <ThemeToggle variant={variant} />
+          <code style={{ fontSize: 'var(--asm-font-size-xs)' }}>{variant}</code>
         </div>
-      </div>
+      ))}
     </div>
-  );
-};
 
-const CSSVariablesExample: React.FC = () => {
+    <h4 style={{ marginBottom: 'var(--asm-space-4)' }}>ThemeSelector</h4>
+    <div style={{ marginBottom: 'var(--asm-space-6)' }}>
+      <ThemeSelector variant="buttons" />
+    </div>
+    <div style={{ marginBottom: 'var(--asm-space-6)' }}>
+      <ThemeSelector variant="dropdown" />
+    </div>
+
+    <h4 style={{ marginBottom: 'var(--asm-space-4)' }}>DensitySelector</h4>
+    <DensitySelector />
+  </Card>
+);
+
+const DesignTokensSection: React.FC = () => {
+  const tokenCategories = [
+    {
+      title: 'Colors',
+      tokens: [
+        '--asm-color-bg',
+        '--asm-color-surface',
+        '--asm-color-text',
+        '--asm-color-text-muted',
+        '--asm-color-border',
+        '--asm-color-button-primary-bg',
+      ]
+    },
+    {
+      title: 'Spacing',
+      tokens: [
+        '--asm-space-1 (4px)',
+        '--asm-space-2 (8px)',
+        '--asm-space-3 (12px)',
+        '--asm-space-4 (16px)',
+        '--asm-space-6 (24px)',
+        '--asm-space-8 (32px)',
+      ]
+    },
+    {
+      title: 'Typography',
+      tokens: [
+        '--asm-font-family-primary',
+        '--asm-font-size-sm',
+        '--asm-font-size-md',
+        '--asm-font-size-lg',
+        '--asm-font-weight-400',
+        '--asm-font-weight-600',
+      ]
+    },
+    {
+      title: 'Effects',
+      tokens: [
+        '--asm-radius-sm',
+        '--asm-radius-md',
+        '--asm-radius-lg',
+        '--asm-effect-shadow-sm',
+        '--asm-transition-fade',
+        '--asm-motion-duration-normal',
+      ]
+    },
+  ];
+
   return (
-    <div>
-      <h3>CSS Variables</h3>
-      <p>
-        The package automatically injects CSS variables that you can use in your
-        styles. This makes it easy to apply theme colors and properties
-        throughout your application.
+    <Card title="Design Tokens">
+      <p style={{ marginTop: 0, color: 'var(--asm-color-text)' }}>
+        The package leverages <code>@asafarim/design-tokens</code> for consistent theming across all applications.
       </p>
-      <CodeBlock code={codeExamples.cssVariables} language="css" />
-
-      <div style={{ marginTop: "1.5rem" }}>
-        <h4>Available CSS Variables:</h4>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-            gap: "1rem",
-            marginTop: "1rem",
-          }}
-        >
-          <div
-            style={{
-              padding: "1rem",
-              backgroundColor: "var(--theme-color-background-secondary)",
-              border: "1px solid var(--theme-color-border)",
-              borderRadius: "var(--theme-radius-md)",
-            }}
-          >
-            <h5>Colors</h5>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>
-                <code>--theme-color-background</code>
-              </li>
-              <li>
-                <code>--theme-color-text</code>
-              </li>
-              <li>
-                <code>--theme-color-primary</code>
-              </li>
-              <li>
-                <code>--theme-color-border</code>
-              </li>
+      
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: 'var(--asm-space-4)',
+        marginTop: 'var(--asm-space-6)',
+      }}>
+        {tokenCategories.map(category => (
+          <div key={category.title} style={{
+            padding: 'var(--asm-space-4)',
+            backgroundColor: 'var(--asm-color-surface-muted)',
+            borderRadius: 'var(--asm-radius-md)',
+          }}>
+            <h5 style={{
+              margin: '0 0 var(--asm-space-3) 0',
+              fontSize: 'var(--asm-font-size-md)',
+              fontWeight: 'var(--asm-font-weight-600)',
+            }}>
+              {category.title}
+            </h5>
+            <ul style={{
+              margin: 0,
+              padding: '0 0 0 var(--asm-space-4)',
+              fontSize: 'var(--asm-font-size-sm)',
+              color: 'var(--asm-color-text-muted)',
+            }}>
+              {category.tokens.map(token => (
+                <li key={token} style={{ marginBottom: 'var(--asm-space-1)' }}>
+                  <code>{token}</code>
+                </li>
+              ))}
             </ul>
           </div>
-          <div
-            style={{
-              padding: "1rem",
-              backgroundColor: "var(--theme-color-background-secondary)",
-              border: "1px solid var(--theme-color-border)",
-              borderRadius: "var(--theme-radius-md)",
-            }}
-          >
-            <h5>Spacing</h5>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>
-                <code>--theme-spacing-xs</code>
-              </li>
-              <li>
-                <code>--theme-spacing-sm</code>
-              </li>
-              <li>
-                <code>--theme-spacing-md</code>
-              </li>
-              <li>
-                <code>--theme-spacing-lg</code>
-              </li>
-            </ul>
-          </div>
-          <div
-            style={{
-              padding: "1rem",
-              backgroundColor: "var(--theme-color-background-secondary)",
-              border: "1px solid var(--theme-color-border)",
-              borderRadius: "var(--theme-radius-md)",
-            }}
-          >
-            <h5>Other</h5>
-            <ul style={{ paddingLeft: "1.2rem" }}>
-              <li>
-                <code>--theme-radius-sm</code>
-              </li>
-              <li>
-                <code>--theme-radius-md</code>
-              </li>
-              <li>
-                <code>--theme-transition-normal</code>
-              </li>
-              <li>
-                <code>--theme-font-size-sm</code>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const AdvancedUsageExample: React.FC = () => {
-  return (
-    <div>
-      <h3>Advanced Usage Patterns</h3>
-
-      <div style={{ marginBottom: "2rem" }}>
-        <h4>Dynamic Theme Loading</h4>
-        <p>
-          Load themes dynamically based on user preferences or API responses:
-        </p>
-        <CodeBlock code={codeExamples.dynamicThemeLoading} />
+        ))}
       </div>
 
-      <div>
-        <h4>Multi-Brand Applications</h4>
-        <p>
-          Switch between different brand themes for multi-tenant applications:
-        </p>
-        <CodeBlock code={codeExamples.multiBrandThemes} />
-      </div>
-    </div>
-  );
-};
-
-const ComponentsExample: React.FC = () => {
-  return (
-    <div>
-      <h3>Built-in Components</h3>
-      <p>The package includes ready-to-use components for theme switching:</p>
-
-      <div style={{ marginTop: "1.5rem" }}>
-        <h4>ThemeToggle Component</h4>
-        <p>A button that cycles through light, dark, and auto modes:</p>
-        <div
-          style={{
-            padding: "1rem",
-            backgroundColor: "var(--theme-color-background-secondary)",
-            border: "1px solid var(--theme-color-border)",
-            borderRadius: "var(--theme-radius-md)",
-            marginBottom: "1rem",
-          }}
-        >
-          <div style={{ marginBottom: "1rem" }}>
-            <strong>Default:</strong> <ThemeToggle variant="default" />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <strong>Outline:</strong> <ThemeToggle variant="outline" />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <strong>Ghost:</strong> <ThemeToggle variant="ghost" />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <strong>Link (with label):</strong>{" "}
-            <ThemeToggle variant="link" showLabels={true} />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <strong>Circle:</strong> <ThemeToggle variant="circle" />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <strong>Icon:</strong> <ThemeToggle variant="icon" />
-          </div>
-          <div>
-            <strong>Custom Size:</strong> <ThemeToggle size="lg" variant="default" />
-          </div>
-        </div>
-
-        <h4>ThemeSelector Component</h4>
-        <p>A dropdown selector for theme modes:</p>
-        <div
-          style={{
-            padding: "1rem",
-            backgroundColor: "var(--theme-color-background-secondary)",
-            border: "1px solid var(--theme-color-border)",
-            borderRadius: "var(--theme-radius-md)",
-          }}
-        >
-          <ThemeSelector />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const RealWorldExample: React.FC = () => {
-  const { currentTheme } = useTheme();
-
-  return (
-    <div>
-      <h3>Real-World Example</h3>
-      <p>
-        Here's a practical example of a themed card component that adapts to the
-        current theme:
-      </p>
-
-      <div
-        style={{
-          marginTop: "1.5rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: "1.5rem",
-        }}
-      >
-        <div
-          style={{
-            padding: "1.5rem",
-            backgroundColor: "var(--theme-color-background-secondary)",
-            border: "1px solid var(--theme-color-border)",
-            borderRadius: "var(--theme-radius-md)",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            transition: "var(--theme-transition-normal)",
-          }}
-        >
-          <h4 style={{ marginTop: 0 }}>Product Card</h4>
-          <div
-            style={{
-              width: "100%",
-              height: "120px",
-              backgroundColor: currentTheme.colors.primary,
-              borderRadius: "var(--theme-radius-sm)",
-              marginBottom: "1rem",
-            }}
-          />
-          <h5>Premium Headphones</h5>
-          <p style={{ color: "var(--theme-color-text-secondary)" }}>
-            High-quality wireless headphones with noise cancellation.
-          </p>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontWeight: "bold" }}>$299.99</span>
-            <button
-              style={{
-                backgroundColor: "var(--theme-color-primary)",
-                color: "white",
-                border: "none",
-                padding: "0.5rem 1rem",
-                borderRadius: "var(--theme-radius-sm)",
-                cursor: "pointer",
-              }}
-            >
-              Add to Cart
-            </button>
-          </div>
-        </div>
-
-        <div
-          style={{
-            padding: "1.5rem",
-            backgroundColor: "var(--theme-color-background-secondary)",
-            border: "1px solid var(--theme-color-border)",
-            borderRadius: "var(--theme-radius-md)",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            transition: "var(--theme-transition-normal)",
-          }}
-        >
-          <h4 style={{ marginTop: 0 }}>User Profile</h4>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            <div
-              style={{
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%",
-                backgroundColor: currentTheme.colors.primary,
-                marginRight: "1rem",
-              }}
-            />
-            <div>
-              <h5 style={{ margin: 0 }}>Jane Smith</h5>
-              <p
-                style={{
-                  margin: 0,
-                  color: "var(--theme-color-text-secondary)",
-                }}
-              >
-                Product Designer
-              </p>
-            </div>
-          </div>
-          <p>
-            Experienced designer with a passion for creating intuitive user
-            interfaces.
-          </p>
-          <div
-            style={{
-              display: "flex",
-              gap: "0.5rem",
-            }}
-          >
-            <button
-              style={{
-                backgroundColor: "transparent",
-                color: "var(--theme-color-primary)",
-                border: "1px solid var(--theme-color-primary)",
-                padding: "0.5rem 1rem",
-                borderRadius: "var(--theme-radius-sm)",
-                cursor: "pointer",
-              }}
-            >
-              Message
-            </button>
-            <button
-              style={{
-                backgroundColor: "var(--theme-color-primary)",
-                color: "white",
-                border: "none",
-                padding: "0.5rem 1rem",
-                borderRadius: "var(--theme-radius-sm)",
-                cursor: "pointer",
-              }}
-            >
-              Follow
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Main tutorial component
-const ThemeTutorial: React.FC = () => {
-  const { currentTheme, mode } = useTheme();
-  const { isDark, isLight, isAuto } = useThemeToggle();
-
-  const gotoNpm = () => {
-    window.open(
-      "https://www.npmjs.com/package/@asafarim/react-themes",
-      "_blank"
-    );
-  };
-
-  return (
-    <div
-      style={{
-        backgroundColor: "var(--theme-color-background, #fff)",
-        color: "var(--theme-color-text, #000)",
-        minHeight: "100vh",
-        transition: "all 0.3s ease",
-        padding: "0",
-        margin: "0",
-        width: "100%",
-      }}
-    >
-      <HeaderComponent
-        type="outlined"
-        style={
-          {
-            width: "100%",
-            margin: "auto",
-            padding: "1rem"
-
-          }
-        }
-        title="@asafarim/react-themes Tutorial"
-        subtitle="A comprehensive guide to using the theme management system for React applications"
-        logoText="ASM"
-        size="sm"
-        align="space-between"
-        elevation="medium"
-        onLogoClick={gotoNpm}
-        onTitleClick={gotoNpm}
-        leftContent={
-          <ThemeToggle
-            size="lg"
-            variant="icon"
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              color: "var(--theme-color-text, #d80e0eff)",
-              cursor: "pointer",
-            }}
-          />
-        }
-        rightContent={
-          <ButtonComponent
-            size="lg"
-            variant="outline"
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              color: "var(--theme-color-text, #d80e0eff)",
-              cursor: "pointer",
-              padding: "0rem 1rem",
-              boxShadow: "var(--theme-shadow-sm)",
-            }}
-            onClick={() =>
-              window.open(
-                "https://github.com/AliSafari-IT/react-themes",
-                "_blank"
-              )
-            }
-            icon={<GithubIcon key={"react-themes"} />}
-            target="_blank"
-          >
-            GitHub
-          </ButtonComponent>
-        }
+      <CodeBlock 
+        title="Using Design Tokens in CSS"
+        code={`.my-component {
+  background: var(--asm-color-surface);
+  color: var(--asm-color-text);
+  padding: var(--asm-space-4);
+  border-radius: var(--asm-radius-md);
+  box-shadow: var(--asm-effect-shadow-sm);
+  transition: var(--asm-transition-fade);
+}`}
       />
-
-      <div style={{ marginTop: "3rem" }}>
-        <PackageLinks
-          packageName="@asafarim/react-themes"
-          githubPath="https://github.com/AliSafari-IT/react-themes"
-          demoPath="https://alisafari-it.github.io/react-themes/"
-        />
-      </div>
-      <div style={{ marginBottom: "2rem", marginTop: "2rem" }}>
-        <div
-          style={{
-            padding: "1.5rem",
-            backgroundColor: "var(--theme-color-background-secondary)",
-            border: "1px solid var(--theme-color-border)",
-            borderRadius: "var(--theme-radius-md)",
-            marginBottom: "2rem",
-          }}
-        >
-          <h2 style={{ marginTop: 0 }}>Current Theme Status</h2>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
-            <div>
-              <p>
-                <strong>Mode:</strong> {mode}
-              </p>
-              <p>
-                <strong>Theme:</strong> {currentTheme.name}
-              </p>
-              <p>
-                <strong>Is Dark:</strong> {isDark ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Is Light:</strong> {isLight ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Is Auto:</strong> {isAuto ? "Yes" : "No"}
-              </p>
-            </div>
-            <div>
-              <p>
-                <strong>Primary Color:</strong>{" "}
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: currentTheme.colors.primary,
-                    borderRadius: "4px",
-                    verticalAlign: "middle",
-                    marginLeft: "8px",
-                  }}
-                ></span>
-              </p>
-              <p>
-                <strong>Background:</strong>{" "}
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: currentTheme.colors.background,
-                    border: "1px solid var(--theme-color-border)",
-                    borderRadius: "4px",
-                    verticalAlign: "middle",
-                    marginLeft: "8px",
-                  }}
-                ></span>
-              </p>
-              <p>
-                <strong>Text:</strong>{" "}
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: currentTheme.colors.text,
-                    borderRadius: "4px",
-                    verticalAlign: "middle",
-                    marginLeft: "8px",
-                  }}
-                ></span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <TabComponent
-        tabs={[
-          {
-            id: "basic",
-            label: "Basic Usage",
-            content: <BasicUsageExample />,
-          },
-          {
-            id: "custom-themes",
-            label: "Custom Themes",
-            content: <CustomThemesExample />,
-          },
-          {
-            id: "css-variables",
-            label: "CSS Variables",
-            content: <CSSVariablesExample />,
-          },
-          {
-            id: "components",
-            label: "Components",
-            content: <ComponentsExample />,
-          },
-          {
-            id: "advanced",
-            label: "Advanced Usage",
-            content: <AdvancedUsageExample />,
-          },
-          {
-            id: "real-world",
-            label: "Real-World Examples",
-            content: <RealWorldExample />,
-          },
-        ]}
-      />
-
-    </div>
+    </Card>
   );
 };
 
-// Main demo app
+const FeaturesSection: React.FC = () => {
+  const features = [
+    { icon: <Palette size={20} />, title: 'Design Token Integration', description: 'Seamlessly integrates with @asafarim/design-tokens for consistent theming' },
+    { icon: <Zap size={20} />, title: 'Auto Theme Detection', description: 'Automatically detects and respects system theme preferences' },
+    { icon: <Layout size={20} />, title: 'Density Controls', description: 'Built-in support for compact, default, and comfortable density modes' },
+    { icon: <Code size={20} />, title: 'TypeScript First', description: 'Fully typed with comprehensive TypeScript support' },
+    { icon: <Settings size={20} />, title: 'Customizable', description: 'Flexible API allows full customization of theme behavior' },
+    { icon: <CheckCircle size={20} />, title: 'SSR Ready', description: 'Works seamlessly with server-side rendering' },
+  ];
+
+  return (
+    <Card title="Features">
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        gap: 'var(--asm-space-4)',
+      }}>
+        {features.map(feature => (
+          <div key={feature.title} style={{
+            padding: 'var(--asm-space-4)',
+            backgroundColor: 'var(--asm-color-surface-muted)',
+            borderRadius: 'var(--asm-radius-md)',
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--asm-space-2)',
+              marginBottom: 'var(--asm-space-2)',
+              color: 'var(--asm-color-button-primary-bg)',
+            }}>
+              {feature.icon}
+              <h5 style={{
+                margin: 0,
+                fontSize: 'var(--asm-font-size-md)',
+                fontWeight: 'var(--asm-font-weight-600)',
+              }}>
+                {feature.title}
+              </h5>
+            </div>
+            <p style={{
+              margin: 0,
+              fontSize: 'var(--asm-font-size-sm)',
+              color: 'var(--asm-color-text-muted)',
+            }}>
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </Card>
+  );
+};
+
 const App: React.FC = () => {
+
   return (
-    <ThemeProvider
-      defaultMode="light"
-      customThemes={{
-        pink: customPinkTheme,
-        blue: customBlueTheme,
-        green: customGreenTheme,
-      }}
-      persistMode={true}
-    >
-      <ThemeTutorial />
-    </ThemeProvider>
+    <div>
+      <Header />
+      <Container>
+        <FeaturesSection />
+        <QuickStartSection />
+        <ComponentShowcaseSection />
+        <DesignTokensSection />
+        
+        <footer style={{
+          marginTop: 'var(--asm-space-16)',
+          paddingTop: 'var(--asm-space-8)',
+          borderTop: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+          textAlign: 'center',
+          color: 'var(--asm-color-text-muted)',
+          fontSize: 'var(--asm-font-size-sm)',
+        }}>
+          <p>
+            Built with ❤️ by <a href="https://github.com/AliSafari-IT" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--asm-color-button-primary-bg)' }}>Ali Safari</a>
+          </p>
+          <p>
+            <a href="https://www.npmjs.com/package/@asafarim/react-themes" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--asm-color-text-muted)' }}>npm</a>
+            {' • '}
+            <a href="https://github.com/AliSafari-IT/react-themes" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--asm-color-text-muted)' }}>GitHub</a>
+          </p>
+        </footer>
+      </Container>
+    </div>
   );
 };
 

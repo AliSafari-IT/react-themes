@@ -16,24 +16,9 @@ export interface ThemeToggleProps {
   style?: React.CSSProperties;
   showLabels?: boolean;
   size?: "sm" | "md" | "lg";
-  /**
-   * Custom light icon (default: ☀️)
-   */
   lightIcon?: ReactNode | LucideIcon | string;
-
-  /**
-   * Custom dark icon (default: 🌙)
-   */
   darkIcon?: ReactNode | LucideIcon | string;
-
-  /**
-   * Button aria-label
-   */
   ariaLabel?: string;
-
-  /**
-   * Button variant
-   */
   variant?: ThemeToggleVariant;
 }
 
@@ -47,150 +32,114 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   ariaLabel = "Toggle theme",
   variant = "default",
 }) => {
-  const { mode, toggleMode } = useTheme();
+  const { resolvedMode, toggleMode } = useTheme();
 
-    const fontSizeMap: Record<NonNullable<ThemeToggleProps['size']>, string> = {
-    sm: '1rem',
-    md: '1.25rem',
-    lg: '1.5rem',
+  const iconSizeMap: Record<NonNullable<ThemeToggleProps['size']>, string> = {
+    sm: 'var(--asm-icon-size-sm)',
+    md: 'var(--asm-icon-size-md)',
+    lg: 'var(--asm-icon-size-lg)',
   };
 
   const circleSizeMap: Record<NonNullable<ThemeToggleProps['size']>, string> = {
-    sm: '2rem',
-    md: '2.5rem',
-    lg: '3rem',
+    sm: '32px',
+    md: '40px',
+    lg: '48px',
   };
 
-  const buttonClass = `
-    inline-flex items-center justify-center
-    focus:outline-none focus:ring-2 focus:ring-blue-500
-    transition-all duration-200
-    ${className}
-  `.trim();
-
-
-    const renderIcon = (icon: ReactNode | LucideIcon | string) => {
+  const renderIcon = (icon: ReactNode | LucideIcon | string) => {
     if (React.isValidElement(icon)) {
       return icon;
     }
     if (typeof icon === 'function') {
       const IconComp = icon as LucideIcon;
-      return <IconComp aria-hidden="true" />;
+      return <IconComp size={iconSizeMap[size]} strokeWidth={1.5} aria-hidden="true" />;
     }
     return icon as React.ReactNode;
   };
 
   const getIcon = () => {
-    switch (mode) {
-      case "light":
-        return renderIcon(lightIcon);
-      case "dark":
-        return renderIcon(darkIcon);
-      case "auto":
-      default:
-        return "🌓";
-    }
+    return resolvedMode === "dark" ? renderIcon(darkIcon) : renderIcon(lightIcon);
   };
-
 
   const getLabel = () => {
-    switch (mode) {
-      case "light":
-        return "Light";
-      case "dark":
-        return "Dark";
-      case "auto":
-      default:
-        return "Auto";
-    }
+    return resolvedMode === "dark" ? "Dark" : "Light";
   };
 
-  
-    const baseStyles: CSSProperties = {
-    borderRadius: 'var(--theme-radius-md, 0.375rem)',
-    padding: '0.5rem',
+  const baseStyles: CSSProperties = {
+    borderRadius: 'var(--asm-radius-md)',
+    padding: 'var(--asm-space-2)',
     cursor: 'pointer',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: fontSizeMap[size],
-    transition: 'all 0.2s ease-in-out',
-    color: 'var(--color-text, #0f172a)',
+    gap: 'var(--asm-space-2)',
+    fontSize: 'var(--asm-font-size-md)',
+    transition: 'var(--asm-transition-fade), var(--asm-transition-scale)',
+    border: 'none',
   };
-
 
   const variantStyles: Record<ThemeToggleVariant, CSSProperties> = {
     default: {
-      background: 'var(--color-surface, white)',
-      border: '1px solid var(--color-border, #e5e7eb)',
-      color: 'var(--color-text, #0f172a)',
-      textAlign: 'center',
+      background: 'var(--asm-color-button-secondary-bg)',
+      border: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+      color: 'var(--asm-color-button-secondary-text)',
     },
     outline: {
       background: 'transparent',
-      border: '1px solid var(--color-border, #e5e7eb)',
-      color: 'var(--color-text, #0f172a)',
-      textAlign: 'center',
-      outline: 'none',
-      
+      border: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+      color: 'var(--asm-color-text)',
     },
     ghost: {
       background: 'transparent',
-      border: 'none',
-      color: 'var(--color-text, #0f172a)',
-      textAlign: 'center',
+      color: 'var(--asm-color-text)',
     },
     link: {
       background: 'transparent',
-      border: 'none',
       padding: 0,
-      fontSize: '1rem',
-      color: 'var(--color-primary, #2563eb)',
-      textAlign: 'center',
-
+      color: 'var(--asm-color-button-primary-bg)',
     },
-        circle: {
-      background: 'var(--color-surface, white)',
-      border: '1px solid var(--color-border, #e5e7eb)',
-      borderRadius: '9999px',
-      textAlign: 'center',
+    circle: {
+      background: 'var(--asm-color-button-secondary-bg)',
+      border: `var(--asm-border-hairline) solid var(--asm-color-border)`,
+      borderRadius: 'var(--asm-radius-full)',
     },
-
     icon: {
       background: 'transparent',
-      border: 'none',
       padding: 0,
-      fontSize: '1.5rem',
-      textAlign: 'center',
     },
   };
 
-    const mergedStyles = {
+  const mergedStyles: CSSProperties = {
     ...baseStyles,
     ...(variantStyles[variant] ?? variantStyles.default),
-    ...style,
-  };
-
-  const finalStyles: CSSProperties = {
-    ...mergedStyles,
     ...(variant === "circle" ? { width: circleSizeMap[size], height: circleSizeMap[size] } : {}),
+    ...style,
   };
   
   return (
     <button
       aria-label={ariaLabel}
       type="button"
-      style={finalStyles}
+      style={mergedStyles}
       onClick={toggleMode}
-      className={buttonClass}
+      className={className}
       title={ariaLabel}
+      onMouseEnter={(e) => {
+        if (variant === 'ghost' || variant === 'icon') {
+          e.currentTarget.style.background = 'var(--asm-color-button-ghost-bg-hover)';
+        }
+      }}
+      onMouseLeave={(e) => {
+        if (variant === 'ghost' || variant === 'icon') {
+          e.currentTarget.style.background = 'transparent';
+        }
+      }}
     >
-
-      <span role="img" aria-hidden="true">
-        {getIcon()}
-      </span>
+      {getIcon()}
       {showLabels && (
-        <span className="ml-2 text-sm font-medium">{getLabel()}</span>
+        <span style={{ fontSize: 'var(--asm-font-size-sm)', fontWeight: 'var(--asm-font-weight-500)' }}>
+          {getLabel()}
+        </span>
       )}
     </button>
   );

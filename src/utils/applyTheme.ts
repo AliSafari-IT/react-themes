@@ -15,54 +15,49 @@ export function applyTheme(theme: Theme, mode: ThemeMode): void {
   }
 
   // Set data attributes for CSS targeting
-  root.setAttribute('data-theme', theme.name);
-  root.setAttribute('data-theme-mode', effectiveMode);
+  root.setAttribute('data-theme', effectiveMode);
 
-  // Apply color variables
+  // Apply color variables using --asm- prefix for design tokens
   Object.entries(theme.colors).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-color-${kebabCase(key)}`, value);
+    root.style.setProperty(`--asm-color-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`, value);
   });
 
-  // Apply spacing variables
+  // Apply spacing variables using --asm- prefix
   Object.entries(theme.spacing).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-spacing-${key}`, value);
+    root.style.setProperty(`--asm-space-${key}`, value);
   });
 
-  // Apply radius variables
+  // Apply radius variables using --asm- prefix
   Object.entries(theme.radius).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-radius-${key}`, value);
+    root.style.setProperty(`--asm-radius-${key}`, value);
   });
 
-  // Apply typography variables
+  // Apply typography variables using --asm- prefix
   Object.entries(theme.typography.fontFamily).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-font-family-${key}`, value);
+    root.style.setProperty(`--asm-font-family-${key}`, value);
   });
 
   Object.entries(theme.typography.fontSize).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-font-size-${key}`, value);
+    root.style.setProperty(`--asm-font-size-${key}`, value);
   });
 
   Object.entries(theme.typography.fontWeight).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-font-weight-${key}`, value);
+    root.style.setProperty(`--asm-font-weight-${key}`, String(value));
   });
 
   Object.entries(theme.typography.lineHeight).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-line-height-${key}`, value);
+    root.style.setProperty(`--asm-line-height-${key}`, String(value));
   });
 
-  // Apply transition variables
+  // Apply transition variables using --asm- prefix
   Object.entries(theme.transitions).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-transition-${key}`, value);
+    root.style.setProperty(`--asm-transition-${key}`, value);
   });
 
-  // Apply z-index variables
+  // Apply z-index variables using --asm- prefix
   Object.entries(theme.zIndex).forEach(([key, value]) => {
-    root.style.setProperty(`--theme-z-index-${kebabCase(key)}`, value.toString());
+    root.style.setProperty(`--asm-z-${kebabCase(key)}`, value.toString());
   });
-
-  // Add theme class to body for additional styling
-  document.body.className = document.body.className.replace(/theme-\w+/g, '');
-  document.body.classList.add(`theme-${theme.name}`, `theme-${effectiveMode}`);
 }
 
 /**
@@ -75,19 +70,15 @@ export function removeTheme(): void {
   
   // Remove data attributes
   root.removeAttribute('data-theme');
-  root.removeAttribute('data-theme-mode');
 
   // Remove CSS variables (this is a simplified approach - in production you might want to track which variables were set)
   const styles = root.style;
   for (let i = styles.length - 1; i >= 0; i--) {
     const property = styles[i];
-    if (property.startsWith('--theme-')) {
+    if (property.startsWith('--asm-')) {
       root.style.removeProperty(property);
     }
   }
-
-  // Remove theme classes from body
-  document.body.className = document.body.className.replace(/theme-\w+/g, '');
 }
 
 /**

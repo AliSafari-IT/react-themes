@@ -1,140 +1,34 @@
-// Theme types
 export type ThemeMode = 'light' | 'dark' | 'auto';
 
-export interface ThemeColors {
-  // Background colors
-  background: string;
-  backgroundSecondary: string;
-  backgroundTertiary: string;
-  
-  // Text colors
-  text: string;
-  textSecondary: string;
-  textMuted: string;
-  
-  // Border colors
-  border: string;
-  borderLight: string;
-  borderHover: string;
-  
-  // Accent colors
-  primary: string;
-  primaryHover: string;
-  primaryActive: string;
-  
-  // Status colors
-  success: string;
-  warning: string;
-  error: string;
-  info: string;
-  
-  // Interactive states
-  hover: string;
-  active: string;
-  focus: string;
-  
-  // Shadows
-  shadow: string;
-  shadowMd: string;
-  shadowLg: string;
-}
+export type DensityMode = 'compact' | 'comfortable' | 'default';
 
-export interface ThemeSpacing {
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  '2xl': string;
-  '3xl': string;
-  '4xl': string;
-}
-
-export interface ThemeRadius {
-  none: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  '2xl': string;
-  full: string;
-}
-
-export interface ThemeTypography {
-  fontFamily: {
-    sans: string;
-    serif: string;
-    mono: string;
-  };
-  fontSize: {
-    xs: string;
-    sm: string;
-    base: string;
-    lg: string;
-    xl: string;
-    '2xl': string;
-    '3xl': string;
-    '4xl': string;
-    '5xl': string;
-  };
-  fontWeight: {
-    light: string;
-    normal: string;
-    medium: string;
-    semibold: string;
-    bold: string;
-  };
-  lineHeight: {
-    tight: string;
-    normal: string;
-    relaxed: string;
-  };
-}
-
-export interface ThemeTransitions {
-  fast: string;
-  normal: string;
-  slow: string;
-  bounce: string;
-}
-
-export interface Theme {
-  name: string;
-  mode: ThemeMode;
-  colors: ThemeColors;
-  spacing: ThemeSpacing;
-  radius: ThemeRadius;
-  typography: ThemeTypography;
-  transitions: ThemeTransitions;
-  zIndex: {
-    dropdown: number;
-    modal: number;
-    tooltip: number;
-    overlay: number;
-  };
-}
+export type DirectionMode = 'ltr' | 'rtl';
 
 export interface ThemeContextValue {
-  theme: Theme;
   mode: ThemeMode;
   setMode: (mode: ThemeMode) => void;
   toggleMode: () => void;
+  density: DensityMode;
+  setDensity: (density: DensityMode) => void;
+  direction: DirectionMode;
+  setDirection: (direction: DirectionMode) => void;
   isDark: boolean;
   isLight: boolean;
   isAuto: boolean;
   systemPrefersDark: boolean;
-  applyTheme: (customTheme: Partial<Theme>) => void;
-  resetTheme: () => void;
+  resolvedMode: 'light' | 'dark';
 }
 
 export interface ThemeProviderProps {
   children: React.ReactNode;
   defaultMode?: ThemeMode;
-  customTheme?: Partial<Theme>;
+  defaultDensity?: DensityMode;
+  defaultDirection?: DirectionMode;
   storageKey?: string;
   enableTransitions?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
+  persistMode?: boolean;
+  persistDensity?: boolean;
+  persistDirection?: boolean;
 }
 
 export interface UseThemeOptions {
@@ -144,24 +38,27 @@ export interface UseThemeOptions {
 
 export interface ThemeConfig {
   defaultMode?: ThemeMode;
-  defaultTheme?: string;
+  defaultDensity?: DensityMode;
+  defaultDirection?: DirectionMode;
   persistMode?: boolean;
+  persistDensity?: boolean;
+  persistDirection?: boolean;
   storageKey?: string;
   enableTransitions?: boolean;
-  customThemes?: Record<string, Theme>;
 }
 
-// CSS Variable names for theme integration
-export interface ThemeVariables {
-  colors: Record<keyof ThemeColors, string>;
-  spacing: Record<keyof ThemeSpacing, string>;
-  radius: Record<keyof ThemeRadius, string>;
+export interface Theme {
+  name: string;
+  mode: ThemeMode;
+  colors: Record<string, string>;
+  spacing: Record<string, string>;
+  radius: Record<string, string>;
   typography: {
-    fontFamily: Record<keyof ThemeTypography['fontFamily'], string>;
-    fontSize: Record<keyof ThemeTypography['fontSize'], string>;
-    fontWeight: Record<keyof ThemeTypography['fontWeight'], string>;
-    lineHeight: Record<keyof ThemeTypography['lineHeight'], string>;
+    fontFamily: Record<string, string>;
+    fontSize: Record<string, string>;
+    fontWeight: Record<string, string | number>;
+    lineHeight: Record<string, string | number>;
   };
-  transitions: Record<keyof ThemeTransitions, string>;
-  zIndex: Record<keyof Theme['zIndex'], string>;
+  transitions: Record<string, string>;
+  zIndex: Record<string, number>;
 }

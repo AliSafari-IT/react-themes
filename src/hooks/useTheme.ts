@@ -1,8 +1,6 @@
-import { useThemeContext, ThemeContextType } from '../components/ThemeProvider';
+import { useThemeContext } from '../components/ThemeProvider';
+import type { ThemeContextValue } from '../types';
 
-/**
- * Hook to access theme context
- */
-export function useTheme(): ThemeContextType {
+export function useTheme(): ThemeContextValue {
   return useThemeContext();
 }

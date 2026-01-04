@@ -1,136 +1,128 @@
 import * as React from 'react';
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { Theme, ThemeConfig, ThemeMode } from '../types';
-import { defaultThemes } from '../themes';
-import { applyTheme } from '../utils/applyTheme';
+import { createContext, useContext, useEffect, useState } from 'react';
+import type { ThemeContextValue, ThemeProviderProps, ThemeMode, DensityMode, DirectionMode } from '../types';
+import '@asafarim/design-tokens/css/index.css';
 
-export interface ThemeContextType {
-  currentTheme: Theme;
-  mode: ThemeMode;
-  setMode: (mode: ThemeMode) => void;
-  setTheme: (theme: Theme) => void;
-  themes: Record<string, Theme>;
-  toggleMode: () => void;
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export interface ThemeProviderProps {
-  children: ReactNode;
-  config?: ThemeConfig;
-  defaultMode?: ThemeMode;
-  defaultTheme?: string;
-  persistMode?: boolean;
-  storageKey?: string;
-  customThemes?: Record<string, Theme>;
-}
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultMode = 'auto',
-  defaultTheme = 'default',
+  defaultDensity = 'default',
+  defaultDirection = 'ltr',
+  storageKey = 'asafarim-theme',
+  enableTransitions = true,
   persistMode = true,
-  storageKey = 'asafarim-theme-mode',
-  customThemes = {},
+  persistDensity = false,
+  persistDirection = false,
 }) => {
-  const allThemes = { ...defaultThemes, ...customThemes };
-  
-  // Get initial mode from localStorage or use default
-  const getInitialMode = (): ThemeMode => {
-    if (!persistMode || typeof window === 'undefined') return defaultMode;
-    
+  const getStoredValue = <T extends string>(key: string, defaultValue: T): T => {
+    if (typeof window === 'undefined') return defaultValue;
     try {
-      const stored = localStorage.getItem(storageKey);
-      if (stored && ['light', 'dark', 'auto'].includes(stored)) {
-        return stored as ThemeMode;
-      }
+      const stored = localStorage.getItem(`${storageKey}-${key}`);
+      return (stored as T) || defaultValue;
+    } catch {
+      return defaultValue;
+    }
+  };
+
+  const setStoredValue = (key: string, value: string, persist: boolean) => {
+    if (!persist || typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(`${storageKey}-${key}`, value);
     } catch (error) {
-      console.warn('Failed to read theme mode from localStorage:', error);
+      console.warn(`Failed to save ${key} to localStorage:`, error);
     }
-    
-    return defaultMode;
-  };
-  const [mode, setModeState] = useState<ThemeMode>(getInitialMode);
-  const [currentThemeName, setCurrentThemeName] = useState<string>(defaultTheme);
-
-  // Get the effective mode (resolving 'auto' to actual light/dark)
-  const getEffectiveMode = (): 'light' | 'dark' => {
-    if (mode === 'auto') {
-      if (typeof window !== 'undefined') {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-      return 'light'; // fallback for SSR
-    }
-    return mode;
-  };
-  // Get the current theme based on mode and theme name
-  const getCurrentTheme = (): Theme => {
-    const effectiveMode = getEffectiveMode();
-    
-    // If user selected a specific theme, use it
-    if (currentThemeName !== 'default' && currentThemeName in allThemes) {
-      return allThemes[currentThemeName as keyof typeof allThemes];
-    }
-    
-    // Otherwise use the theme that matches the effective mode
-    return effectiveMode === 'dark' ? allThemes.dark : allThemes.light;
   };
 
-  const currentTheme = getCurrentTheme();
+  const [mode, setModeState] = useState<ThemeMode>(() => 
+    persistMode ? getStoredValue('mode', defaultMode) : defaultMode
+  );
+  const [density, setDensityState] = useState<DensityMode>(() => 
+    persistDensity ? getStoredValue('density', defaultDensity) : defaultDensity
+  );
+  const [direction, setDirectionState] = useState<DirectionMode>(() => 
+    persistDirection ? getStoredValue('direction', defaultDirection) : defaultDirection
+  );
+  const [systemPrefersDark, setSystemPrefersDark] = useState<boolean>(false);
 
-  // Update mode and persist if enabled
+  const resolvedMode: 'light' | 'dark' = 
+    mode === 'auto' 
+      ? (systemPrefersDark ? 'dark' : 'light')
+      : mode;
+
   const setMode = (newMode: ThemeMode) => {
     setModeState(newMode);
-    
-    if (persistMode && typeof window !== 'undefined') {
-      try {
-        localStorage.setItem(storageKey, newMode);
-      } catch (error) {
-        console.warn('Failed to save theme mode to localStorage:', error);
-      }
-    }
+    setStoredValue('mode', newMode, persistMode);
   };
 
-  // Toggle between light and dark modes
+  const setDensity = (newDensity: DensityMode) => {
+    setDensityState(newDensity);
+    setStoredValue('density', newDensity, persistDensity);
+  };
+
+  const setDirection = (newDirection: DirectionMode) => {
+    setDirectionState(newDirection);
+    setStoredValue('direction', newDirection, persistDirection);
+  };
+
   const toggleMode = () => {
     if (mode === 'auto') {
-      // If auto, switch to opposite of system preference
-      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setMode(systemDark ? 'light' : 'dark');
+      setMode(systemPrefersDark ? 'light' : 'dark');
     } else {
       setMode(mode === 'light' ? 'dark' : 'light');
     }
   };
-  // Set theme by name
-  const setTheme = (theme: Theme) => {
-    setCurrentThemeName(theme.name);
-  };
-  // Apply theme to document
-  useEffect(() => {
-    applyTheme(currentTheme, mode);
-  }, [currentTheme, mode, currentThemeName]); // Add currentThemeName as dependency
 
-  // Listen for system theme changes when in auto mode
   useEffect(() => {
-    if (mode !== 'auto') return;
-
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = () => {
-      // Force re-render when system preference changes
-      applyTheme(getCurrentTheme(), mode);
+    setSystemPrefersDark(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setSystemPrefersDark(e.matches);
     };
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [mode]);
+  }, []);
 
-  const contextValue: ThemeContextType = {
-    currentTheme,
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (enableTransitions) {
+      root.style.setProperty('transition', 'background-color var(--asm-motion-duration-normal) var(--asm-motion-easing-standard), color var(--asm-motion-duration-normal) var(--asm-motion-easing-standard)');
+    }
+
+    root.setAttribute('data-theme', resolvedMode);
+
+    if (density !== 'default') {
+      root.setAttribute('data-density', density);
+    } else {
+      root.removeAttribute('data-density');
+    }
+
+    root.setAttribute('dir', direction);
+
+    return () => {
+      if (enableTransitions) {
+        root.style.removeProperty('transition');
+      }
+    };
+  }, [resolvedMode, density, direction, enableTransitions]);
+
+  const contextValue: ThemeContextValue = {
     mode,
     setMode,
-    setTheme,
-    themes: allThemes,
     toggleMode,
+    density,
+    setDensity,
+    direction,
+    setDirection,
+    isDark: resolvedMode === 'dark',
+    isLight: resolvedMode === 'light',
+    isAuto: mode === 'auto',
+    systemPrefersDark,
+    resolvedMode,
   };
 
   return (

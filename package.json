@@ -1,6 +1,6 @@
 {
   "name": "@asafarim/react-themes",
-  "version": "1.8.7",
+  "version": "1.8.8",
   "description": "A comprehensive theme management system for React applications with automatic dark/light mode detection, custom theme creation, and smooth transitions.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -101,6 +101,7 @@
     ]
   },
   "dependencies": {
-    "lucide-react": "^0.562.0"
+    "lucide-react": "^0.562.0",
+    "@asafarim/design-tokens": "^0.5.0"
   }
 }

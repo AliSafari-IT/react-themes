@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@asafarim/design-tokens':
+        specifier: ^0.5.0
+        version: 0.5.0
       lucide-react:
         specifier: ^0.562.0
         version: 0.562.0(react@18.3.1)
@@ -91,6 +94,10 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@asafarim/design-tokens@0.5.0':
+    resolution: {integrity: sha512-q7NguuMVBgaToX1EEOeraAiBebqKhidKKUohsMpKScHJh7mv/5igQcpDI+xdL479pCy9Kx5yUu0dhyNX2Gro+Q==}
+    engines: {node: '>=16'}
 
   '@asafarim/shared@1.7.3':
     resolution: {integrity: sha512-WsAPWnnsC//XsEpPn38Mv6oCEwYWHUE2DvRNaZNTkr0w0Hac7VTAiESzNT5G82WRV+jLUxCFu8nXN7T+l4hmZQ==}
@@ -2070,6 +2077,8 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.30
+
+  '@asafarim/design-tokens@0.5.0': {}
 
   '@asafarim/shared@1.7.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
