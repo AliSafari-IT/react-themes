@@ -382,11 +382,144 @@ const FeaturesSection: React.FC = () => {
 };
 
 const App: React.FC = () => {
+  const packageVersion = "1.8.9";
 
   return (
     <div>
       <Header />
       <Container>
+        {/* Version Banner */}
+        <div style={{
+          background: 'linear-gradient(135deg, var(--asm-color-button-primary-bg), var(--asm-color-primary-600))',
+          borderRadius: 'var(--asm-radius-lg)',
+          padding: 'var(--asm-space-6)',
+          marginBottom: 'var(--asm-space-8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 'var(--asm-space-4)',
+          boxShadow: 'var(--asm-effect-shadow-lg)',
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 'var(--asm-space-3)',
+            color: 'var(--asm-color-button-primary-text)'
+          }}>
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.2)',
+              borderRadius: 'var(--asm-radius-full)',
+              padding: 'var(--asm-space-2) var(--asm-space-4)',
+              fontSize: 'var(--asm-font-size-lg)',
+              fontWeight: 'var(--asm-font-weight-700)',
+              backdropFilter: 'blur(10px)',
+            }}>
+              v{packageVersion}
+            </div>
+            <div>
+              <h2 style={{ 
+                margin: 0, 
+                fontSize: 'var(--asm-font-size-2xl)', 
+                fontWeight: 'var(--asm-font-weight-700)',
+                color: 'var(--asm-color-button-primary-text)'
+              }}>
+                Latest Release Available
+              </h2>
+              <p style={{ 
+                margin: 'var(--asm-space-1) 0 0', 
+                fontSize: 'var(--asm-font-size-md)',
+                color: 'rgba(255, 255, 255, 0.9)',
+                opacity: 0.9
+              }}>
+                Get the newest features and improvements
+              </p>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 'var(--asm-space-3)', alignItems: 'center' }}>
+            <a
+              href="https://www.npmjs.com/package/@asafarim/react-themes"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--asm-space-2)',
+                padding: 'var(--asm-space-3) var(--asm-space-4)',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                color: 'var(--asm-color-button-primary-text)',
+                textDecoration: 'none',
+                borderRadius: 'var(--asm-radius-md)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                fontSize: 'var(--asm-font-size-sm)',
+                fontWeight: 'var(--asm-font-weight-600)',
+                transition: 'var(--asm-transition-fade)',
+                backdropFilter: 'blur(10px)',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="currentColor" 
+                style={{ display: 'block' }}
+              >
+                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+              </svg>
+              View on npm
+            </a>
+            <a
+              href="https://github.com/AliSafari-IT/react-themes/releases/tag/v1.8.9"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--asm-space-2)',
+                padding: 'var(--asm-space-3) var(--asm-space-4)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                color: 'var(--asm-color-button-primary-text)',
+                textDecoration: 'none',
+                borderRadius: 'var(--asm-radius-md)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                fontSize: 'var(--asm-font-size-sm)',
+                fontWeight: 'var(--asm-font-weight-600)',
+                transition: 'var(--asm-transition-fade)',
+                backdropFilter: 'blur(10px)',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              <svg 
+                width="20" 
+                height="20" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2"
+                style={{ display: 'block' }}
+              >
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+              Release Notes
+            </a>
+          </div>
+        </div>
         <FeaturesSection />
         <QuickStartSection />
         <ComponentShowcaseSection />
