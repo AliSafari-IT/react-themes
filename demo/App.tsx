@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useTheme, ThemeToggle, ThemeSelector, DensitySelector } from "../src";
 import { Github, Palette, Code, Zap, Layout, Settings, CheckCircle } from "lucide-react";
+import packageJson from "../package.json";
 
 const Container: React.FC<{ children: React.ReactNode; maxWidth?: string }> = ({ children, maxWidth = 'var(--asm-container-xl)' }) => (
   <div style={{
@@ -382,7 +383,7 @@ const FeaturesSection: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  const packageVersion = "1.8.9";
+  const packageVersion = packageJson.version;
 
   return (
     <div>
@@ -477,7 +478,7 @@ const App: React.FC = () => {
               View on npm
             </a>
             <a
-              href="https://github.com/AliSafari-IT/react-themes/releases/tag/v1.8.9"
+              href={`https://github.com/AliSafari-IT/react-themes/releases/tag/v${packageVersion}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{
