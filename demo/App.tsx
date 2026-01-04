@@ -152,7 +152,7 @@ const QuickStartSection: React.FC = () => (
     
     <CodeBlock 
       title="Installation"
-      code={`npm install @asafarim/react-themes @asafarim/design-tokens`}
+      code={`npm install @asafarim/react-themes`}
     />
     
     <CodeBlock 
